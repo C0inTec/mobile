@@ -42,7 +42,7 @@ export default function Main() {
 
         <View style={styles.headerDiv2}>
           <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>
-            Olá, Alguém!
+            Olá, Waldemar!
           </Text>
         </View>
       </View>
