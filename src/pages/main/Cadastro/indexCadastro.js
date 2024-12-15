@@ -4,27 +4,38 @@ import {
   Text, 
   StyleSheet, 
   TextInput, 
-  TouchableOpacity,
-  Alert
+  TouchableOpacity, 
+  Alert 
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function EntradaUser2() {
+export default function Cadastro() {
   const navigation = useNavigation();
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const verificaLogin = () => {
-      if (!email.trim() || !senha.trim()) {
-        Alert.alert('Erro', 'Por favor, preencha todos os campos.');
-      } else {
-        navigation.navigate('main');
-      }
-    };
+  const [tipoInvestidor, setTipoInvestidor] = useState('');
+
+  const VerificaCadastro = () => {
+    if (!nome.trim() || !email.trim() || !senha.trim() || !tipoInvestidor.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+    } else {
+      navigation.navigate('EntradaUser');
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>CoinTec$</Text>
-      <Text style={styles.subtitle}>Bem-vindo!</Text>
+      <Text style={styles.subtitle}>Preencha os campos abaixo :</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
+        placeholderTextColor="#666"
+        value={nome}
+        onChangeText={setNome}
+      />
       
       <TextInput
         style={styles.input}
@@ -43,12 +54,20 @@ export default function EntradaUser2() {
         value={senha}
         onChangeText={setSenha}
       />
-
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Tipo de Investidor"
+        placeholderTextColor="#666"
+        value={tipoInvestidor}
+        onChangeText={setTipoInvestidor}
+      />
+      
       <TouchableOpacity 
         style={styles.button}
-        onPress={verificaLogin}
+        onPress={VerificaCadastro}
       >
-        <Text style={styles.buttonText}>Entrar</Text>
+        <Text style={styles.buttonText}>Concluir</Text>
       </TouchableOpacity>
     </View>
   );
