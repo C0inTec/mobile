@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Text, View, Image, TouchableOpacity, ScrollView, Modal, TextInput, StyleSheet } from 'react-native';
-import { sendMessageToGPT, sendMessageToGemini } from '../../api/openIA'; // Certifique-se de que o serviço está configurado corretamente
+import { Text, View, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import styles from './maisStyle';
 import ModalChat from '../../components/modalChat';
@@ -67,8 +66,6 @@ export default function Main() {
             </Text>
           </View>
 
-
-
           {/* FAB */}
           <TouchableOpacity
             style={[styles.fab, { position: 'absolute', top: '60%', right: 20 }]}
@@ -79,8 +76,11 @@ export default function Main() {
         </View>
       </ScrollView>
 
-      {modalVisible? <ModalChat/> :  null}
-
+      {/* Passando estado e função de controle para o modal */}
+      <ModalChat
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </View>
   );
 }
