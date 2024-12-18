@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import styles from './maisStyle';
+
+// Modais || Janelas
 import ModalChat from '../../components/modalChat';
+import ModalPerfil from '../../components/modals/modalPerfil';
 
 export default function Main() {
   const [eye, setEye] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false); // Estado do modal
+  const [modalVisible, setModalVisible] = useState(false); // Estado do modal de chat
+  const [ModalPerfilVisible, setModalPerfilVisible] = useState(false)
 
   const handleFabPress = () => {
     setModalVisible(true); // Abre o modal
@@ -17,7 +21,7 @@ export default function Main() {
       {/* Header da main */}
       <View style={styles.headerBox}>
         <View style={styles.headerDiv1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalPerfilVisible(!ModalPerfilVisible)}>
             <Image
               source={{ uri: 'https://randomuser.me/api/portraits/men/41.jpg' }}
               style={{ width: 55, height: 55, borderRadius: 50 }}
@@ -76,11 +80,15 @@ export default function Main() {
         </View>
       </ScrollView>
 
-      {/* Passando estado e função de controle para o modal */}
+      {/* Passando estado e função de controle para os modais */}
       <ModalChat
         modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
+        setModalVisible={setModalVisible}/>
+
+      <ModalPerfil
+        modalVisible={ModalPerfilVisible}
+        setModalVisible={setModalPerfilVisible}/>
+      
     </View>
   );
 }
