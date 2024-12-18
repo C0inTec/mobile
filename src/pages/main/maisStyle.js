@@ -52,6 +52,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 15,
   },
+  gastosChart: {
+    backgroundColor: corPreta,
+    width: '100%',
+    height: '35%',
+    borderColor: corBorda,
+    borderWidth: 1.5,
+    borderRadius: 10,
+    marginTop: 15,
+  },
   contaRow: {
     flexDirection: 'row',
     alignItems: 'center',
