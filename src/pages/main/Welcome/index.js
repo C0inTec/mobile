@@ -19,7 +19,7 @@ export default function Welcome() {
         animation="fadeInDown"
         duration={1500}
         delay={500}
-        source={require('../../../../assets/logo.png')}
+        source={require('../../../../assets/Logo3.png')}
         style={{ width: "100%", height: 300 }}
         resizeMode="contain"
       />
