@@ -14,10 +14,11 @@ export default function Cadastro() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [senhaConfirma, setSenhaConfirma] = useState('');
   const [tipoInvestidor, setTipoInvestidor] = useState('');
 
   const VerificaCadastro = () => {
-    if (!nome.trim() || !email.trim() || !senha.trim() || !tipoInvestidor.trim()) {
+    if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim() || !tipoInvestidor.trim()) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
     } else {
       navigation.navigate('EntradaUser');
@@ -54,7 +55,15 @@ export default function Cadastro() {
         value={senha}
         onChangeText={setSenha}
       />
-      
+      <TextInput
+        style={styles.input}
+        placeholder="SenhaConfirma"
+        placeholderTextColor="#666"
+        secureTextEntry
+        value={senhaConfirma}
+        onChangeText={setSenhaConfirma}
+      />
+
       <TextInput
         style={styles.input}
         placeholder="Tipo de Investidor"
