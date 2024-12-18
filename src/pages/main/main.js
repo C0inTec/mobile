@@ -3,6 +3,8 @@ import { Text, View, Image, TouchableOpacity, ScrollView, StyleSheet } from 'rea
 import Icon from 'react-native-vector-icons/Feather';
 import styles from './maisStyle';
 
+import conection from '../../api/mainAPI';
+
 // Modais || Janelas
 import ModalChat from '../../components/modalChat';
 import ModalPerfil from '../../components/modals/modalPerfil';
@@ -15,6 +17,8 @@ export default function Main() {
   const handleFabPress = () => {
     setModalVisible(true); // Abre o modal
   };
+
+  console.log(conection())
 
   return (
     <View style={{ flex: 1 }}>
