@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignSelf: 'center',
   },
-  gastosComponent: {
+  receitaComponent: {
     backgroundColor: corPreta,
     width: '100%',
     height: '10%',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 15,
   },
-  gastosChart: {
+  receitaChart: {
     backgroundColor: corPreta,
     width: '100%',
     height: '35%',
