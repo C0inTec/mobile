@@ -5,8 +5,6 @@ import { PieChart } from "react-native-chart-kit";
 import styles from "./mainStyle";
 import { useNavigation } from '@react-navigation/native';
 
-import { conectionUser, conectionWallet } from "../../api/mainAPI";
-
 // Modais || Janelas
 import ModalChat from "../../components/modalChat";
 import ModalPerfil from "../../components/modals/modalPerfil";
@@ -21,52 +19,43 @@ export default function Main() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const user = await conectionUser();
-      const wallet = await conectionWallet();
+    // Dados genéricos para o gráfico
+    const despesasData = [
+      {
+        name: "Contas",
+        population: 400, // Valor arbitrário
+        color: "#f39c12",
+        legendFontColor: "#FFFFFF",
+        legendFontSize: 10,
+      },
+      {
+        name: "Comida",
+        population: 300, // Valor arbitrário
+        color: "#e74c3c",
+        legendFontColor: "#FFFFFF",
+        legendFontSize: 10,
+      },
+      {
+        name: "Lazer",
+        population: 200, // Valor arbitrário
+        color: "#8e44ad",
+        legendFontColor: "#FFFFFF",
+        legendFontSize: 10,
+      },
+      {
+        name: "Outros",
+        population: 100, // Valor arbitrário
+        color: "#3498db",
+        legendFontColor: "#FFFFFF",
+        legendFontSize: 10,
+      },
+    ];
 
-      setApiResponseUser(user[2]);
-      setApiResponseWallet(wallet[2]);
+    setChartData(despesasData);
 
-      // Gerar dados dinâmicos para o gráfico
-      const totalDespesas = wallet[2]?.despesas || 0;
-
-      // Distribuição arbitrária de categorias (ajuste conforme necessário)
-      const despesasData = [
-        {
-          name: "Contas",
-          population: totalDespesas * 0.4,
-          color: "#f39c12",
-          legendFontColor: "#FFFFFF",
-          legendFontSize: 10,
-        },
-        {
-          name: "Comida",
-          population: totalDespesas * 0.3,
-          color: "#e74c3c",
-          legendFontColor: "#FFFFFF",
-          legendFontSize: 10,
-        },
-        {
-          name: "Lazer",
-          population: totalDespesas * 0.2,
-          color: "#8e44ad",
-          legendFontColor: "#FFFFFF",
-          legendFontSize: 10,
-        },
-        {
-          name: "Outros",
-          population: totalDespesas * 0.1,
-          color: "#3498db",
-          legendFontColor: "#FFFFFF",
-          legendFontSize: 10,
-        },
-      ];
-
-      setChartData(despesasData);
-    };
-
-    fetchData();
+    // Dados genéricos para o usuário e carteira
+    setApiResponseUser({ first_name: "João" }); // Nome genérico
+    setApiResponseWallet({ saldo: 1500.00, despesas: 1000.00 }); // Valores genéricos
   }, []);
 
   const handleFabPress = () => {
@@ -114,6 +103,7 @@ export default function Main() {
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
       >
         <View style={styles.contentBox}>
+          
           {/* Saldo em contas */}
           <View style={styles.receitaComponent}>
             <View style={styles.contaRow}>
@@ -192,18 +182,21 @@ export default function Main() {
             </View>
           </View>
 
-          {/* FAB */}
-          <TouchableOpacity
-            style={[
-              styles.fab,
-              { position: "absolute", top: "60%", right: 20 },
-            ]}
-            onPress={handleFabPress}
-          >
-            <Icon name="terminal" size={24} color="white" />
-          </TouchableOpacity>
         </View>
       </ScrollView>
+
+      {/* FAB */}
+      <TouchableOpacity
+        style={[
+          styles.fab,
+          { position: "absolute", top: "85%", right: 20 },
+        ]}
+        onPress={handleFabPress}
+      >
+        <Icon name="terminal" size={24} color="white" />
+      </TouchableOpacity>
+
+
 
       {/* Modais */}
       <ModalChat
