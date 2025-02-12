@@ -196,8 +196,6 @@ export default function Main() {
         <Icon name="terminal" size={24} color="white" />
       </TouchableOpacity>
 
-
-
       {/* Modais */}
       <ModalChat
         modalVisible={modalVisible}

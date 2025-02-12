@@ -6,17 +6,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { MaskedTextInput } from "react-native-mask-text";
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 
 function Receita() {
-  const [valor, setValor] = useState("");
+  const [valor, setValor] = useState("0");
+  // Estado para armazenar o valor formatado exibido no input
+  const [maskedValue, setMaskedValue] = useState("R$ 0,00");
   const [descricao, setDescricao] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const navigation = useNavigation();
 
+  // Manipulador de alteração de data
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -24,43 +28,66 @@ function Receita() {
     }
   };
 
+  // Confirmação dos dados
   const handleConfirm = () => {
-    // Aqui você pode implementar a lógica para salvar a receita
-    navigation.goBack();
+    const valorEmReais = parseFloat(valor) / 100;
+    console.log("Valor salvo:", valorEmReais.toFixed(2));
+    navigation.navigate("main");
   };
 
   return (
     <View style={styles.container}>
+      {/* Header da tela */}
       <View style={styles.header}>
-        <Icon name="arrow-left" size={24} color="#fff" />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("main")}
+          style={styles.backButton}
+        >
+          <Icon name="arrow-left" size={24} color="#fff" />
+        </TouchableOpacity>
         <Text style={styles.title}>Nova receita</Text>
       </View>
 
+      {/* Seção de valor monetário */}
       <View style={styles.valorContainer}>
         <Text style={styles.labelValor}>Valor da receita</Text>
         <View style={styles.inputRow}>
-          <Text style={styles.currency}>R$</Text>
-          <TextInput
+          <MaskedTextInput
+            type="currency"
+            options={{
+              prefix: "R$ ",
+              decimalSeparator: ",",
+              groupSeparator: ".",
+              precision: 2,
+            }}
             style={styles.inputValor}
-            placeholder="0,00"
-            placeholderTextColor="#fff"
-            keyboardType="numeric"
+            keyboardType="number-pad" // Teclado numérico
             value={valor}
-            onChangeText={setValor}
+            // Garante que, mesmo que maskedValue seja undefined, usaremos uma string vazia para definir a posição do cursor
+            selection={{ start: (maskedValue || "").length, end: (maskedValue || "").length }}
+            onChangeText={(formatted, rawText) => {
+              setValor(rawText || "0");
+              setMaskedValue(formatted);
+            }}
+            placeholder="00,00"
+            placeholderTextColor="#fff"
           />
-          <Text style={styles.moeda}>BRL</Text>
         </View>
       </View>
 
+      {/* Seção de seleção de data */}
       <View style={styles.dataSection}>
         <TouchableOpacity
           style={styles.dataButton}
           onPress={() => setShowDatePicker(true)}
         >
-          <Text style={styles.dataButtonText}>{date.toLocaleDateString()}</Text>
+          <Text style={styles.dataButtonText}>
+            {date.toLocaleDateString()}
+          </Text>
         </TouchableOpacity>
       </View>
 
+      {/* DatePicker condicional */}
       {showDatePicker && (
         <DateTimePicker
           value={date}
@@ -72,6 +99,7 @@ function Receita() {
         />
       )}
 
+      {/* Campo de descrição */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Descrição</Text>
         <TextInput
@@ -80,10 +108,16 @@ function Receita() {
           placeholderTextColor="#666"
           value={descricao}
           onChangeText={setDescricao}
+          maxLength={100}
         />
       </View>
 
-      <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+      {/* Botão de confirmação */}
+      <TouchableOpacity
+        style={styles.confirmButton}
+        onPress={handleConfirm}
+        activeOpacity={0.8}
+      >
         <Text style={styles.confirmButtonText}>Confirmar</Text>
       </TouchableOpacity>
     </View>
@@ -100,6 +134,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 30,
+  },
+  backButton: {
+    padding: 10,
+    marginRight: 10,
   },
   title: {
     color: "#fff",
@@ -118,19 +156,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  currency: {
-    color: "#fff",
-    fontSize: 30,
-    marginRight: 5,
-  },
   inputValor: {
     color: "#fff",
     fontSize: 30,
     flex: 1,
-  },
-  moeda: {
-    color: "#666",
-    fontSize: 16,
+    paddingVertical: 8,
   },
   dataSection: {
     flexDirection: "row",
@@ -143,19 +173,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 10,
   },
-  dataButtonInactive: {
-    backgroundColor: "#333",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    marginRight: 10,
-  },
   dataButtonText: {
-    color: "#000", // Mudando de #fff para #000
+    color: "#000",
     fontWeight: "bold",
-  },
-  dataButtonTextInactive: {
-    color: "#fff",
   },
   inputContainer: {
     marginBottom: 20,
