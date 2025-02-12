@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TextInput, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
   Alert, Image
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -39,21 +39,21 @@ export default function Cadastro() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../../assets/Logo3.png")} style={{width: 200, height: 150}}/>
+      <Image source={require("../../../../assets/Logo3.png")} style={{ width: 200, height: 150 }} />
       <Text style={styles.title}>É hora de iniciar sua jornada!</Text>
       <Text style={styles.text}>Crie sua conta e comece a transformar sua vida financeira!</Text>
-      
-      <View style={{flexDirection: 'row'}}>
+
+      <View style={{ flexDirection: 'row' }}>
         <TextInput
-          style={[styles.input, {width: "48%"}]}
+          style={[styles.input, { width: "48%" }]}
           placeholder="Nome"
           placeholderTextColor="#666"
           value={nome}
           onChangeText={setNome}
         />
-        
+
         <TextInput
-          style={[styles.input, {width: "48%", marginLeft: 15}]}
+          style={[styles.input, { width: "48%", marginLeft: 15 }]}
           placeholder="Sobrenome"
           placeholderTextColor="#666"
           value={nome}
@@ -61,8 +61,8 @@ export default function Cadastro() {
         />
 
       </View>
-      
-      
+
+
       <TextInput
         style={styles.input}
         placeholder="E-mail"
@@ -96,7 +96,7 @@ export default function Cadastro() {
         value={cpf}
         onChangeText={setCpf}
       />
-      
+
       <TextInput
         style={styles.input}
         placeholder="Contato"
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: corTexto,
     textAlign: 'center',
-  },  
-  text:{
+  },
+  text: {
     fontSize: 15,
     textAlign: 'center',
     color: corSubTexto,
@@ -179,18 +179,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  },  
+  },
   saveButton: {
-    backgroundColor: corPrimaria, // Botão com a cor primária
+    backgroundColor: corPrimaria,
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   saveButtonDisabled: {
-    backgroundColor: '#ccc', // Botão desativado com cinza
+    backgroundColor: '#ccc',
   },
   saveButtonText: {
-    color: corTexto, // Texto branco
+    color: corTexto,
     fontWeight: 'bold',
   },
 });

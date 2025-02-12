@@ -115,9 +115,9 @@ const styles = StyleSheet.create({
     borderColor: corBorda,
     backgroundColor: corIntermediaria,
     shadowColor: corIntermediaria,
-    shadowOffset: { width: 4, height: 8 }, // Direção da sombra
-    shadowOpacity: 0.8, // Transparência da sombra
-    shadowRadius: 15, // Suavização da sombra
-    elevation: 10, // Necessário para Android
+    shadowOffset: { width: 4, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 10,
   }  
 });
