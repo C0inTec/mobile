@@ -9,7 +9,7 @@ import Header from "../components/header/header";
 import WalletCard from "../components/cards/walletCard";
 import DespesasChart from "../components/charts/despesasChart";
 
-export default function Main() {
+export default function Home() {
   const [eye, setEye] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [ModalPerfilVisible, setModalPerfilVisible] = useState(false);
@@ -23,28 +23,28 @@ export default function Main() {
       {
         name: "Contas",
         population: 400,
-        color: "#f39c12",
+        color: "#F39C12",
         legendFontColor: "#FFFFFF",
         legendFontSize: 10,
       },
       {
         name: "Comida",
         population: 300,
-        color: "#e74c3c",
+        color: "#E74C3C",
         legendFontColor: "#FFFFFF",
         legendFontSize: 10,
       },
       {
         name: "Lazer",
         population: 200,
-        color: "#8e44ad",
+        color: "#8E44AD",
         legendFontColor: "#FFFFFF",
         legendFontSize: 10,
       },
       {
         name: "Outros",
         population: 100,
-        color: "#3498db",
+        color: "#3498DB",
         legendFontColor: "#FFFFFF",
         legendFontSize: 10,
       },
@@ -104,7 +104,7 @@ export default function Main() {
       <TouchableOpacity
         style={[styles.fab,{ position: "absolute", top: "85%", right: 20 }]}
         onPress={handleFabPress}>
-        <Icon name="terminal" size={24} color="white" />
+        <Icon name="terminal" size={24} color="FFFFFF" />
       </TouchableOpacity>
 
       <ModalChat
@@ -119,21 +119,15 @@ export default function Main() {
   );
 }
 
-const corPrimaria = '#d4a413';
-const corSecundaria = '#0a0a0a';
-const corTexto = 'white';
-const corBorda = '#c0c0c0';
-const corPreta = 'black';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: corTexto,
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerBox: {
-    backgroundColor: corPrimaria,
+    backgroundColor: '#D4A413',
     height: '25%',
     width: '100%',
   },
@@ -150,31 +144,31 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   mainDiv: {
-    backgroundColor: corSecundaria,
+    backgroundColor: '#0A0A0A',
     minHeight: '100%',
     width: '100%',
     height: '100%',
   },
   contentBox: {
-    backgroundColor: corSecundaria,
+    backgroundColor: '#0A0A0A',
     width: '90%',
     height: '100%',
     alignSelf: 'center',
   },
   receitaComponent: {
-    backgroundColor: corPreta,
+    backgroundColor: '#000000',
     width: '100%',
     height: '10%',
-    borderColor: corBorda,
+    borderColor: '#C0C0C0',
     borderWidth: 1.5,
     borderRadius: 10,
     marginTop: 15,
   },
   receitaChart: {
-    backgroundColor: corPreta,
+    backgroundColor: '#000000',
     width: '100%',
     height: '35%',
-    borderColor: corBorda,
+    borderColor: '#C0C0C0',
     borderWidth: 1.5,
     borderRadius: 10,
     marginTop: 15,
@@ -187,39 +181,39 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   contaText: {
-    color: corTexto,
+    color: '#FFFFFF',
     fontSize: 17,
     fontWeight: 'bold',
   },
   valorText: {
     fontSize: 17,
     paddingHorizontal: 10,
-    color: corTexto,
+    color: '#FFFFFF',
     fontWeight: 'bold',
     marginTop: 5,
   },
   fab: {
     width: 60,
     height: 60,
-    backgroundColor: corPrimaria, 
+    backgroundColor: '#D4A413',
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: '#00000080',
     justifyContent: 'center',
     alignItems: 'center',
   },
   chatBox: {
     width: '90%',
     height: '70%',
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 10,
   },
@@ -228,12 +222,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: '#DDDDDD',
     paddingBottom: 10,
   },
   chatTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#000000',
   },
   messageArea: {
     flex: 1,
@@ -241,27 +236,27 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 16,
-    color: 'black',
+    color: '#000000',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopColor: '#DDDDDD',
     paddingTop: 10,
   },
   input: {
     flex: 1,
     height: 40,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
     borderRadius: 20,
     paddingHorizontal: 15,
     fontSize: 14,
-    color: 'black',
+    color: '#000000',
   },
   sendButton: {
     marginLeft: 10,
-    backgroundColor: '#d4a413',
+    backgroundColor: '#D4A413',
     width: 40,
     height: 40,
     borderRadius: 20,

@@ -30,10 +30,9 @@ function Despesa() {
 
   return (
     <View style={styles.container}>
-
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#fff" />
+          <Icon name="arrow-left" size={24} color="#FFFFFF" />
         </TouchableOpacity>
         <Text style={styles.title}>Nova Despesa</Text>
       </View>
@@ -45,7 +44,7 @@ function Despesa() {
           <TextInput
             style={styles.inputValor}
             placeholder="0,00"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#FFFFFF"
             keyboardType="numeric"
             value={valor}
             onChangeText={setValor}
@@ -79,7 +78,7 @@ function Despesa() {
         <TextInput
           style={styles.input}
           placeholder="Digite uma descrição"
-          placeholderTextColor="#666"
+          placeholderTextColor="#666666"
           value={descricao}
           onChangeText={setDescricao}
         />
@@ -95,7 +94,7 @@ function Despesa() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#000000",
     padding: 20,
   },
   header: {
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 20,
     marginLeft: 15,
   },
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   labelValor: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 16,
     marginBottom: 10,
   },
@@ -122,17 +121,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   currency: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 30,
     marginRight: 5,
   },
   inputValor: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 30,
     flex: 1,
   },
   moeda: {
-    color: "#666",
+    color: "#666666",
     fontSize: 16,
   },
   dataSection: {
@@ -146,32 +145,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 10,
   },
-  dataButtonInactive: {
-    backgroundColor: "#333",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    marginRight: 10,
-  },
   dataButtonText: {
-    color: "#000",
+    color: "#000000",
     fontWeight: "bold",
-  },
-  dataButtonTextInactive: {
-    color: "#fff",
   },
   inputContainer: {
     marginBottom: 20,
   },
   label: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 16,
     marginBottom: 10,
   },
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: "#333",
-    color: "#fff",
+    borderBottomColor: "#333333",
+    color: "#FFFFFF",
     paddingVertical: 10,
   },
   confirmButton: {
@@ -182,7 +171,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   confirmButtonText: {
-    color: "#000",
+    color: "#000000",
     fontSize: 16,
     fontWeight: "bold",
   },

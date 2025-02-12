@@ -30,7 +30,7 @@ export default function Cadastro() {
   };
 
   const VerificaCadastro = () => {
-    if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim() || !tipoInvestidor.trim()) {
+    if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim()) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
     } else {
       navigation.navigate('EntradaUser');
@@ -39,7 +39,7 @@ export default function Cadastro() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../../assets/Logo3.png")} style={{ width: 200, height: 150 }} />
+      <Image source={require("../../assets/Logo3.png")} style={{ width: 200, height: 150 }} />
       <Text style={styles.title}>É hora de iniciar sua jornada!</Text>
       <Text style={styles.text}>Crie sua conta e comece a transformar sua vida financeira!</Text>
 
@@ -47,7 +47,7 @@ export default function Cadastro() {
         <TextInput
           style={[styles.input, { width: "48%" }]}
           placeholder="Nome"
-          placeholderTextColor="#666"
+          placeholderTextColor="#666666"
           value={nome}
           onChangeText={setNome}
         />
@@ -55,18 +55,16 @@ export default function Cadastro() {
         <TextInput
           style={[styles.input, { width: "48%", marginLeft: 15 }]}
           placeholder="Sobrenome"
-          placeholderTextColor="#666"
-          value={nome}
-          onChangeText={setNome}
+          placeholderTextColor="#666666"
+          value={sobrenome}
+          onChangeText={setSobrenome}
         />
-
       </View>
-
 
       <TextInput
         style={styles.input}
         placeholder="E-mail"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -75,7 +73,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
@@ -83,7 +81,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Confirme a senha"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         secureTextEntry
         value={senhaConfirma}
         onChangeText={setSenhaConfirma}
@@ -92,7 +90,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="CPF"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         value={cpf}
         onChangeText={setCpf}
       />
@@ -100,7 +98,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Contato"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         value={contato}
         onChangeText={setContato}
       />
@@ -108,12 +106,11 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Data de Aniversário"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         value={dataAniversario}
         onChangeText={setData}
       />
 
-      {/* Botão de Salvar */}
       <TouchableOpacity
         style={[styles.button, loading && styles.saveButtonDisabled]}
         onPress={handleSave}
@@ -126,14 +123,6 @@ export default function Cadastro() {
     </View>
   );
 }
-
-const corPrimaria = '#d4a413';
-const corSecundaria = '#0a0a0a';
-const corIntermediaria = "#383838"
-const corTexto = 'white';
-const corSubTexto = "#d0d0d0"
-const corBorda = '#c0c0c0';
-const corPreta = 'black';
 
 const styles = StyleSheet.create({
   container: {
@@ -149,26 +138,26 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 18,
     marginBottom: 10,
-    color: corTexto,
+    color: '#FFFFFF',
     textAlign: 'center',
   },
   text: {
     fontSize: 15,
     textAlign: 'center',
-    color: corSubTexto,
+    color: '#D0D0D0',
     marginBottom: 10,
     marginHorizontal: 40,
   },
   input: {
     width: '100%',
     height: 45,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     paddingHorizontal: 10,
     marginVertical: 10,
   },
   button: {
-    backgroundColor: '#d4a413',
+    backgroundColor: '#D4A413',
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
@@ -176,21 +165,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  saveButton: {
-    backgroundColor: corPrimaria,
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
   saveButtonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  saveButtonText: {
-    color: corTexto,
-    fontWeight: 'bold',
+    backgroundColor: '#CCCCCC',
   },
 });

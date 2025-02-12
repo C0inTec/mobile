@@ -27,20 +27,20 @@ export default function Login() {
       if (!email.trim() || !senha.trim()) {
         Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       } else {
-        navigation.navigate('main');
+        navigation.navigate('Home');
       }
     };
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../../assets/Logo3.png")} style={{width: 200, height: 150, marginTop: 50}}/>
+      <Image source={require("../../assets/Logo3.png")} style={{width: 200, height: 150, marginTop: 50}}/>
       <Text style={styles.title}>Bem vindo de volta!</Text>
       <Text style={styles.text}>Preencha o campo abaixo</Text>
       
       <TextInput
         style={styles.input}
         placeholder="E-mail"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -49,7 +49,7 @@ export default function Login() {
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor="#666"
+        placeholderTextColor="#666666"
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
@@ -72,48 +72,40 @@ export default function Login() {
     </View>
   );
 }
-const corPrimaria = '#d4a413';
-const corSecundaria = '#0a0a0a';
-const corIntermediaria = "#383838"
-const corTexto = 'white';
-const corSubTexto = "#d0d0d0"
-const corBorda = '#c0c0c0';
-const corPreta = 'black';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#0A0A0A',
     padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 50,
     marginHorizontal: 18,
     marginBottom: 10,
-    color: corTexto,
+    color: '#FFFFFF',
     textAlign: 'center',
-    marginTop: 50,
   },  
   text:{
     fontSize: 15,
     textAlign: 'center',
-    color: corSubTexto,
+    color: '#D0D0D0',
     marginBottom: 10,
     marginHorizontal: 40,
   },
   input: {
     width: '100%',
     height: 45,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     paddingHorizontal: 10,
     marginVertical: 10,
   },
   button: {
-    backgroundColor: '#d4a413',
+    backgroundColor: '#D4A413',
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
@@ -121,21 +113,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },  
   saveButton: {
-    backgroundColor: corPrimaria, // Botão com a cor primária
+    backgroundColor: '#D4A413',
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   saveButtonDisabled: {
-    backgroundColor: '#ccc', // Botão desativado com cinza
+    backgroundColor: '#CCCCCC',
   },
   saveButtonText: {
-    color: corTexto, // Texto branco
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });

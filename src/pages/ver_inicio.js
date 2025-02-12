@@ -2,15 +2,13 @@ import React, {useState} from 'react';
 import { 
   View, 
   Text, 
-  StyleSheet, 
-  Image, 
-  TouchableOpacity, 
-  Button
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Welcome() {
+export default function Inicio() {
   const navigation = useNavigation();
   const [animation, setAnimation] = useState("fadeInDown");
 
@@ -21,7 +19,7 @@ export default function Welcome() {
         iterationCount={animation == "pulse" ? "infinite" : 1.0}
         duration={1500}
         delay={500}
-        source={require('../../../../assets/Logo3.png')}
+        source={require('../../assets/Logo3.png')}
         style={{ marginTop: 100, width: "100%", height: 300 }}
         resizeMode="contain"
         onAnimationEnd={() => setAnimation("pulse")}
@@ -39,12 +37,12 @@ export default function Welcome() {
 
           <TouchableOpacity style={[styles.button, { width: 280, padding: 15, justifyContent:'center', alignItems: 'center' }]}
                                     onPress={() => navigation.navigate('Cadastro')}>
-            <Text style={{color: corTexto, fontWeight:"bold", fontSize: 15}}> Cadastre-se </Text>
+            <Text style={{color: '#000000', fontWeight:"bold", fontSize: 15}}> Cadastre-se </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.buttonVzd, { width: 280, padding: 15, justifyContent:'center', alignItems: 'center' }]}
                                     onPress={() => navigation.navigate('Login')}>
-            <Text style={{color: corTexto, fontWeight:"bold", fontSize: 15}}> Já sou cadastrado </Text>
+            <Text style={{color: '#000000', fontWeight:"bold", fontSize: 15}}> Já sou cadastrado </Text>
           </TouchableOpacity>
 
         </View>
@@ -53,14 +51,6 @@ export default function Welcome() {
     </View>
   );
 }
-
-const corPrimaria = '#d4a413';
-const corSecundaria = '#0a0a0a';
-const corIntermediaria = "#383838"
-const corTexto = 'white';
-const corSubTexto = "#d0d0d0"
-const corBorda = '#c0c0c0';
-const corPreta = 'black';
 
 const styles = StyleSheet.create({
   container: {
@@ -76,17 +66,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 18,
     marginBottom: 20,
-    color: corTexto,
+    color: '#FFFFFF',
     textAlign: 'center',
   },
   text:{
     fontSize: 15,
     textAlign: 'center',
-    color: corSubTexto,
+    color: '#D0D0D0',
     marginHorizontal: 40,
   },
   button: {
-    backgroundColor: '#d4a413',
+    backgroundColor: '#D4A413',
     padding: 10,
     borderRadius: 8,
     alignSelf: 'center',
@@ -97,12 +87,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignSelf: 'center',
     marginTop: 20,
-    backgroundColor: corIntermediaria,
-    borderColor: corPrimaria,
+    backgroundColor: '#383838',
+    borderColor: '#D4A413',
     borderWidth: 1,    
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -112,9 +102,9 @@ const styles = StyleSheet.create({
     height: 275,
     marginTop: 20,
     borderRadius: 20,
-    borderColor: corBorda,
-    backgroundColor: corIntermediaria,
-    shadowColor: corIntermediaria,
+    borderColor: '#C0C0C0',
+    backgroundColor: '#383838',
+    shadowColor: '#383838',
     shadowOffset: { width: 4, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 15,
