@@ -8,9 +8,9 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
-import styles from "./receitaStyle";
+import styles from "./despesaStyle";
 
-function Receita() {
+function Despesa() {
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
   const [date, setDate] = useState(new Date());
@@ -35,11 +35,11 @@ function Receita() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.title}>Nova receita</Text>
+        <Text style={styles.title}>Nova Despesa</Text>
       </View>
 
       <View style={styles.valorContainer}>
-        <Text style={styles.labelValor}>Valor da receita</Text>
+        <Text style={styles.labelValor}>Valor da Despesa</Text>
         <View style={styles.inputRow}>
           <Text style={styles.currency}>R$</Text>
           <TextInput
@@ -92,4 +92,4 @@ function Receita() {
   );
 }
 
-export default Receita;
+export default Despesa;

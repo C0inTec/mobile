@@ -7,6 +7,8 @@ import Welcome from '../pages/main/Welcome';
 import EntradaUser2 from '../pages/main/EntradaUser/IndexLogin';
 import Cadastro from '../pages/main/Cadastro/indexCadastro';
 import Receita from '../pages/main/Receita/indexReceita';
+import Despesa from '../pages/main/Despesa/despesa';
+
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,7 @@ export default function Routes() {
             <Stack.Screen name='Cadastro' component={Cadastro} screenOptions={{ headerShown: false}} />
             <Stack.Screen name='main' component={Main} screenOptions={{ headerShown: false}} />
             <Stack.Screen name='Receita' component={Receita} screenOptions={{ headerShown: false}} />
+            <Stack.Screen name='Despesa' component={Despesa} screenOptions={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
   );

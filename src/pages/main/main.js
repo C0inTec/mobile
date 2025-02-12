@@ -97,7 +97,7 @@ export default function Main() {
             title={"Despesas"}
             value={apiResponseWallet?.despesas || "0,00"}
             eye={eye}
-            onPress={() => console.log("Navegue para despesas")}/>
+            onPress={() => navigation.navigate("Despesa")}/>
 
           {/* Gráfico Dinâmico */}
           <DespesasChart chartData={chartData}/>          
