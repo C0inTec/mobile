@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View,TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { PieChart } from "react-native-chart-kit";
 import Icon from "react-native-vector-icons/Feather";
 import styles from "./mainStyle";
 

@@ -4,64 +4,38 @@ import {
   Text, 
   StyleSheet, 
   TextInput, 
-  TouchableOpacity, 
+  TouchableOpacity,
   Alert, Image
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Cadastro() {
+export default function Login() {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [nome, setNome] = useState('');
-  const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [senhaConfirma, setSenhaConfirma] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [contato, setContato] = useState('');
-  const [dataAniversario, setData] = useState('');
 
   const handleSave = () => {
     setLoading(true);
     setTimeout(() => {
-      VerificaCadastro();
+      verificaLogin();
       setLoading(false);
     }, 2000);
   };
 
-  const VerificaCadastro = () => {
-    if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim() || !tipoInvestidor.trim()) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
-    } else {
-      navigation.navigate('EntradaUser');
-    }
-  };
+  const verificaLogin = () => {
+      if (!email.trim() || !senha.trim()) {
+        Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+      } else {
+        navigation.navigate('main');
+      }
+    };
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../../assets/Logo3.png")} style={{width: 200, height: 150}}/>
-      <Text style={styles.title}>É hora de iniciar sua jornada!</Text>
-      <Text style={styles.text}>Crie sua conta e comece a transformar sua vida financeira!</Text>
-      
-      <View style={{flexDirection: 'row'}}>
-        <TextInput
-          style={[styles.input, {width: "48%"}]}
-          placeholder="Nome"
-          placeholderTextColor="#666"
-          value={nome}
-          onChangeText={setNome}
-        />
-        
-        <TextInput
-          style={[styles.input, {width: "48%", marginLeft: 15}]}
-          placeholder="Sobrenome"
-          placeholderTextColor="#666"
-          value={nome}
-          onChangeText={setNome}
-        />
-
-      </View>
-      
+      <Image source={require("../../../../assets/Logo3.png")} style={{width: 200, height: 150, marginTop: 50}}/>
+      <Text style={styles.title}>Bem vindo de volta!</Text>
+      <Text style={styles.text}>Preencha o campo abaixo</Text>
       
       <TextInput
         style={styles.input}
@@ -80,53 +54,24 @@ export default function Cadastro() {
         value={senha}
         onChangeText={setSenha}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirme a senha"
-        placeholderTextColor="#666"
-        secureTextEntry
-        value={senhaConfirma}
-        onChangeText={setSenhaConfirma}
-      />
 
-      <TextInput
-        style={styles.input}
-        placeholder="CPF"
-        placeholderTextColor="#666"
-        value={cpf}
-        onChangeText={setCpf}
-      />
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Contato"
-        placeholderTextColor="#666"
-        value={contato}
-        onChangeText={setContato}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Data de Aniversário"
-        placeholderTextColor="#666"
-        value={dataAniversario}
-        onChangeText={setData}
-      />
-
-      {/* Botão de Salvar */}
       <TouchableOpacity
         style={[styles.button, loading && styles.saveButtonDisabled]}
         onPress={handleSave}
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? 'Carregando...' : 'Concluir'}
+          {loading ? 'Carregando...' : 'Entrar'}
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style={{marginTop: 20}} onPress={() => console.log("Esqueceu senha")}>
+        <Text style={styles.text}>Esqueceu a senha?</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
-
 const corPrimaria = '#d4a413';
 const corSecundaria = '#0a0a0a';
 const corIntermediaria = "#383838"
@@ -139,7 +84,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#000000',
     padding: 20,
   },
@@ -151,6 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: corTexto,
     textAlign: 'center',
+    marginTop: 50,
   },  
   text:{
     fontSize: 15,
