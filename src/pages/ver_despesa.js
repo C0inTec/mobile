@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import { MaskedTextInput } from "react-native-mask-text";
 import Icon from "react-native-vector-icons/Feather";
@@ -13,14 +14,13 @@ import { useNavigation } from "@react-navigation/native";
 
 function Despesa() {
   const [valor, setValor] = useState("0");
-  // Estado para armazenar o valor formatado exibido no input
   const [maskedValue, setMaskedValue] = useState("R$ 0,00");
   const [descricao, setDescricao] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [historico, setHistorico] = useState([]);
   const navigation = useNavigation();
 
-  // Manipulador de alteração de data
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -28,11 +28,23 @@ function Despesa() {
     }
   };
 
-  // Confirmação dos dados
   const handleConfirm = () => {
-    const valorEmReais = parseFloat(valor) / 100;
-    console.log("Valor salvo:", valorEmReais.toFixed(2));
-    navigation.navigate("Home");
+    if (isConfirmButtonEnabled()) {
+      const valorEmReais = parseFloat(valor) / 100;
+      const novaTransacao = {
+        id: Date.now().toString(),
+        descricao: descricao.slice(0, 30),
+        valor: `- R$ ${valorEmReais.toFixed(2)}`,
+      };
+      setHistorico([novaTransacao, ...historico]);
+      setDescricao("");
+      setValor("0");
+      setMaskedValue("R$ 0,00");
+    }
+  };
+
+  const isConfirmButtonEnabled = () => {
+    return parseFloat(valor) > 0 && descricao.trim() !== "";
   };
 
   return (
@@ -104,25 +116,42 @@ function Despesa() {
 
       {/* Campo de descrição */}
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Descrição</Text>
+        <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
         <TextInput
           style={styles.input}
           placeholder="Digite uma descrição"
           placeholderTextColor="#666666"
           value={descricao}
           onChangeText={setDescricao}
-          maxLength={100}
+          maxLength={30}
         />
       </View>
 
       {/* Botão de confirmação */}
       <TouchableOpacity
-        style={styles.confirmButton}
+        style={[
+          styles.confirmButton,
+          !isConfirmButtonEnabled() && styles.confirmButtonDisabled
+        ]}
         onPress={handleConfirm}
         activeOpacity={0.8}
+        disabled={!isConfirmButtonEnabled()}
       >
         <Text style={styles.confirmButtonText}>Confirmar</Text>
       </TouchableOpacity>
+
+      <Text style={styles.historicoTitle}>Histórico de Transações</Text>
+      <FlatList
+        data={historico}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.historicoItem}>
+            <Text style={styles.historicoDescricao}>{item.descricao}</Text>
+            <Text style={styles.historicoValor}>{item.valor}</Text>
+          </View>
+        )}
+        style={styles.historicoList}
+      />
     </View>
   );
 }
@@ -205,6 +234,37 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  historicoTitle: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  historicoList: {
+    flex: 1,
+  },
+  historicoItem: {
+    flexDirection: "column",
+    justifyContent: "center",
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#333333",
+  },
+  historicoDescricao: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  historicoValor: {
+    color: "#FF0000",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  confirmButtonDisabled: {
+    backgroundColor: "#A9A9A9",
+    opacity: 0.5,
   },
 });
 

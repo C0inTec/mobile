@@ -70,7 +70,7 @@ export default function Home() {
       />
 
       <ScrollView
-        style={styles.mainDiv}
+        style={styles.homeDiv}
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
         keyboardShouldPersistTaps="handled"  
         contentInsetAdjustmentBehavior="always">
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     fontSize: 20,
   },
-  mainDiv: {
+  homeDiv: {
     backgroundColor: '#0A0A0A',
     minHeight: '100%',
     width: '100%',
