@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// ver_saldo.js
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -11,15 +12,26 @@ import { MaskedTextInput } from "react-native-mask-text";
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
+import { TransacoesContext } from "../../contexts/TransacoesContext";
 
-function Despesa() {
+function Saldo() {
+  const { saldo, historico, adicionarTransacao } = useContext(TransacoesContext);
   const [valor, setValor] = useState("0");
   const [maskedValue, setMaskedValue] = useState("R$ 0,00");
   const [descricao, setDescricao] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [historico, setHistorico] = useState([]);
+  const [tipoTransacao, setTipoTransacao] = useState("receita");
   const navigation = useNavigation();
+
+  const formatarMoeda = (valor) => {
+    return Number(valor).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
 
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
@@ -30,13 +42,18 @@ function Despesa() {
 
   const handleConfirm = () => {
     if (isConfirmButtonEnabled()) {
-      const valorEmReais = parseFloat(valor) / 100;
+      const valorNumerico = parseFloat(valor) / 100;
+
       const novaTransacao = {
         id: Date.now().toString(),
         descricao: descricao.slice(0, 30),
-        valor: `- R$ ${valorEmReais.toFixed(2)}`,
+        valor: `${tipoTransacao === "receita" ? "+" : "-"} ${formatarMoeda(valorNumerico)}`,
+        cor: tipoTransacao === "receita" ? "#00FF00" : "#FF0000",
+        tipo: tipoTransacao,
       };
-      setHistorico([novaTransacao, ...historico]);
+
+      adicionarTransacao(novaTransacao, valorNumerico);
+
       setDescricao("");
       setValor("0");
       setMaskedValue("R$ 0,00");
@@ -57,12 +74,35 @@ function Despesa() {
         >
           <Icon name="arrow-left" size={24} color="#FFFFFF" />
         </TouchableOpacity>
-        <Text style={styles.title}>Nova despesa</Text>
+        <Text style={styles.title}>Nova transação</Text>
+      </View>
+
+      {/* Botões de Receita/Despesa */}
+      <View style={styles.tipoContainer}>
+        <TouchableOpacity
+          style={[
+            styles.tipoButton,
+            tipoTransacao === "receita" && styles.receitaSelecionada,
+          ]}
+          onPress={() => setTipoTransacao("receita")}
+        >
+          <Text style={styles.tipoButtonText}>Receita</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.tipoButton,
+            tipoTransacao === "despesa" && styles.despesaSelecionada,
+          ]}
+          onPress={() => setTipoTransacao("despesa")}
+        >
+          <Text style={styles.tipoButtonText}>Despesa</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Seção de valor monetário */}
       <View style={styles.valorContainer}>
-        <Text style={styles.labelValor}>Valor da despesa</Text>
+        <Text style={styles.labelValor}>Valor da transação</Text>
         <View style={styles.inputRow}>
           <MaskedTextInput
             type="currency"
@@ -73,12 +113,12 @@ function Despesa() {
               precision: 2,
             }}
             style={styles.inputValor}
-            keyboardType="number-pad" // Teclado numérico
-
-
+            keyboardType="number-pad"
             value={valor}
-            // Garante que, mesmo que maskedValue seja undefined, usaremos uma string vazia para definir a posição do cursor
-            selection={{ start: (maskedValue || "").length, end: (maskedValue || "").length }}
+            selection={{
+              start: (maskedValue || "").length,
+              end: (maskedValue || "").length,
+            }}
             onChangeText={(formatted, rawText) => {
               setValor(rawText || "0");
               setMaskedValue(formatted);
@@ -86,7 +126,6 @@ function Despesa() {
             placeholder="00,00"
             placeholderTextColor="#FFFFFF"
           />
-
         </View>
       </View>
 
@@ -96,9 +135,7 @@ function Despesa() {
           style={styles.dataButton}
           onPress={() => setShowDatePicker(true)}
         >
-          <Text style={styles.dataButtonText}>
-            {date.toLocaleDateString()}
-          </Text>
+          <Text style={styles.dataButtonText}>{date.toLocaleDateString()}</Text>
         </TouchableOpacity>
       </View>
 
@@ -127,11 +164,24 @@ function Despesa() {
         />
       </View>
 
+      {/* Exibição do saldo */}
+      <View style={styles.saldoContainer}>
+        <Text style={styles.saldoLabel}>Saldo em Contas:</Text>
+        <Text
+          style={[
+            styles.saldoValor,
+            { color: saldo >= 0 ? "#00FF00" : "#FF0000" },
+          ]}
+        >
+          {formatarMoeda(saldo)}
+        </Text>
+      </View>
+
       {/* Botão de confirmação */}
       <TouchableOpacity
         style={[
           styles.confirmButton,
-          !isConfirmButtonEnabled() && styles.confirmButtonDisabled
+          !isConfirmButtonEnabled() && styles.confirmButtonDisabled,
         ]}
         onPress={handleConfirm}
         activeOpacity={0.8}
@@ -140,6 +190,7 @@ function Despesa() {
         <Text style={styles.confirmButtonText}>Confirmar</Text>
       </TouchableOpacity>
 
+      {/* Histórico de Transações */}
       <Text style={styles.historicoTitle}>Histórico de Transações</Text>
       <FlatList
         data={historico}
@@ -147,7 +198,9 @@ function Despesa() {
         renderItem={({ item }) => (
           <View style={styles.historicoItem}>
             <Text style={styles.historicoDescricao}>{item.descricao}</Text>
-            <Text style={styles.historicoValor}>{item.valor}</Text>
+            <Text style={[styles.historicoValor, { color: item.cor }]}>
+              {item.valor}
+            </Text>
           </View>
         )}
         style={styles.historicoList}
@@ -258,7 +311,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   historicoValor: {
-    color: "#FF0000",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -266,6 +318,43 @@ const styles = StyleSheet.create({
     backgroundColor: "#A9A9A9",
     opacity: 0.5,
   },
+  tipoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  tipoButton: {
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    backgroundColor: "#333333",
+  },
+  receitaSelecionada: {
+    backgroundColor: "#00FF00",
+  },
+  despesaSelecionada: {
+    backgroundColor: "#FF0000",
+  },
+  tipoButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  saldoContainer: {
+    marginVertical: 20,
+    alignItems: "center",
+  },
+  saldoLabel: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  saldoValor: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
 });
 
-export default Despesa;
+export default Saldo;

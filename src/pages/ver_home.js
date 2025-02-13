@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Feather";
@@ -9,7 +9,10 @@ import Header from "../components/header/header";
 import WalletCard from "../components/cards/walletCard";
 import DespesasChart from "../components/charts/despesasChart";
 
+import { TransacoesContext } from '../../contexts/TransacoesContext';
+
 export default function Home() {
+  const { saldo } = useContext(TransacoesContext);
   const [eye, setEye] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [ModalPerfilVisible, setModalPerfilVisible] = useState(false);
@@ -61,50 +64,38 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header 
-        eye={eye} 
-        setEye={setEye} 
-        ModalPerfilVisible={ModalPerfilVisible} 
-        setModalPerfilVisible={setModalPerfilVisible} 
+      <Header
+        eye={eye}
+        setEye={setEye}
+        ModalPerfilVisible={ModalPerfilVisible}
+        setModalPerfilVisible={setModalPerfilVisible}
         apiResponseUser={apiResponseUser}
       />
 
       <ScrollView
         style={styles.homeDiv}
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
-        keyboardShouldPersistTaps="handled"  
-        contentInsetAdjustmentBehavior="always">
-          
+        keyboardShouldPersistTaps="handled"
+        contentInsetAdjustmentBehavior="always"
+      >
         <View style={styles.contentBox}>
-          <WalletCard 
-            title={"Saldo em contas"} 
-            value={apiResponseWallet?.saldo || "0,00"}
-            eye={eye}
-            onPress={() => console.log("Navega para carteira de contas")}
-          />
-
           <WalletCard
-            title={"Receitas"}
-            value={apiResponseUser?.saldo || "0,00"}
+            title={"Saldo em contas"}
+            value={saldo.toFixed(2).replace('.', ',')}
             eye={eye}
-            onPress={() => navigation.navigate("Receita")}
+            onPress={() => navigation.navigate("Saldo")}
+            saldoColor={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 
-          <WalletCard
-            title={"Despesas"}
-            value={apiResponseWallet?.despesas || "0,00"}
-            eye={eye}
-            onPress={() => navigation.navigate("Despesa")}
-          />
-
-          <DespesasChart chartData={chartData}/>          
+          <DespesasChart chartData={chartData} />
         </View>
       </ScrollView>
 
       <TouchableOpacity
-        style={[styles.fab,{ position: "absolute", top: "85%", right: 20 }]}
-        onPress={handleFabPress}>
-        <Icon name="terminal" size={24} color="FFFFFF" />
+        style={[styles.fab, { position: "absolute", top: "85%", right: 20 }]}
+        onPress={handleFabPress}
+      >
+        <Icon name="terminal" size={24} color="#FFFFFF" />
       </TouchableOpacity>
 
       <ModalChat

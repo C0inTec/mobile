@@ -1,10 +1,13 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Routes from './src/routes/routes';
+import { TransacoesProvider } from './contexts/TransacoesContext';
 
 export default function App() {
   return (
-        <Routes/>
+    <TransacoesProvider>
+      <Routes />
+    </TransacoesProvider>
   );
 }
 
