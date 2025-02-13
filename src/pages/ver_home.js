@@ -55,7 +55,6 @@ export default function Home() {
 
     setChartData(despesasData);
     setApiResponseUser({ first_name: "João" });
-    setApiResponseWallet({ saldo: 1800.00, despesas: 1000.00 });
   }, []);
 
   const handleFabPress = () => {
@@ -84,7 +83,7 @@ export default function Home() {
             value={saldo.toFixed(2).replace('.', ',')}
             eye={eye}
             onPress={() => navigation.navigate("Saldo")}
-            saldoColor={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
+            color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 
           <DespesasChart chartData={chartData} />

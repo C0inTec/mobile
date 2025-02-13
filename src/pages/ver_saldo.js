@@ -170,7 +170,7 @@ function Saldo() {
         <Text
           style={[
             styles.saldoValor,
-            { color: saldo >= 0 ? "#00FF00" : "#FF0000" },
+            { color: saldo > 0 ? "#00FF00" : saldo < 0 ? "#FF0000" : "#FFFFFF" },
           ]}
         >
           {formatarMoeda(saldo)}
