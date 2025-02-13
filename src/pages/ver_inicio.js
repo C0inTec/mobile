@@ -20,7 +20,7 @@ export default function Inicio() {
         duration={1500}
         delay={500}
         source={require('../../assets/Logo3.png')}
-        style={{ marginTop: 100, width: "100%", height: 300 }}
+        style={{ marginTop: 300, width: "100%", height: 300 }}
         resizeMode="contain"
         onAnimationEnd={() => setAnimation("pulse")}
       />
@@ -37,12 +37,12 @@ export default function Inicio() {
 
           <TouchableOpacity style={[styles.button, { width: 280, padding: 15, justifyContent:'center', alignItems: 'center' }]}
                                     onPress={() => navigation.navigate('Cadastro')}>
-            <Text style={{color: '#000000', fontWeight:"bold", fontSize: 15}}> Cadastre-se </Text>
+            <Text style={{color: 'white', fontWeight:"bold", fontSize: 15}}> Cadastre-se </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.buttonVzd, { width: 280, padding: 15, justifyContent:'center', alignItems: 'center' }]}
                                     onPress={() => navigation.navigate('Login')}>
-            <Text style={{color: '#000000', fontWeight:"bold", fontSize: 15}}> Já sou cadastrado </Text>
+            <Text style={{color: 'white', fontWeight:"bold", fontSize: 15}}> Já sou cadastrado </Text>
           </TouchableOpacity>
 
         </View>
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   containerModal: {
-    width: 370, 
-    height: 275,
+    width: "96.5%", 
+    height: "58%",
     marginTop: 20,
     borderRadius: 20,
     borderColor: '#C0C0C0',

@@ -10,7 +10,7 @@ const corPreta = 'black';
 const styles = StyleSheet.create({
   headerBox: {
     backgroundColor: corPrimaria,
-    height: '22.5%',
+    height: '18%',
     width: '100%',
   },
   headerDiv1: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   headerDiv2: {
     marginHorizontal: '8%',
-    marginTop: '10%',
+    marginTop: '5%',
     flexDirection: 'row',
     fontSize: 20,
   }
