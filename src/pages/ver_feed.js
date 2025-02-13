@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import { View, TouchableOpacity, ScrollView, StyleSheet, Text } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Feather";
 
 import WalletCard from "../components/cards/walletCard";
 import DespesasChart from "../components/charts/despesasChart";
+import ReceitaCard from "../components/cards/receitaCard";
 
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 
@@ -59,7 +60,24 @@ export default function Feed({eye}) {
         keyboardShouldPersistTaps="handled"
         contentInsetAdjustmentBehavior="always"
       >
+
         <View style={styles.contentBox}>
+            <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                <ReceitaCard
+                    eye={eye}
+                    title={"Receita"}
+                    value={saldo.toFixed(2).replace('.', ',')}
+                    onPress={() => navigation.navigate("Saldo")}
+                    color={"#00FF00"}/>
+
+                <ReceitaCard
+                    eye={eye}
+                    title={"Despesa"}
+                    value={saldo.toFixed(2).replace('.', ',')}
+                    onPress={() => navigation.navigate("Saldo")}
+                    color={"#FF0000"}/>
+            </View>
+            
           <WalletCard
             title={"Saldo em contas"}
             value={saldo.toFixed(2).replace('.', ',')}
