@@ -16,7 +16,7 @@ import { TransacoesContext } from "../../contexts/TransacoesContext";
 
 function Saldo() {
   const route = useRoute();
-  const tipo = route.params? route.params.tipo : "receita"
+  const tipo = route.params ? route.params.tipo : "receita"
   const { saldo, historico, adicionarTransacao } = useContext(TransacoesContext);
   const [valor, setValor] = useState("0");
   const [maskedValue, setMaskedValue] = useState("R$ 0,00");
