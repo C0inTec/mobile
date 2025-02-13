@@ -10,7 +10,7 @@ import ReceitaCard from "../components/cards/receitaCard";
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 export default function Feed({eye}) {
-  const { saldo } = useContext(TransacoesContext);
+  const { saldo, totalReceitas, totalDespesas } = useContext(TransacoesContext);
   const [apiResponseUser, setApiResponseUser] = useState("");
   const [chartData, setChartData] = useState([]);
   const navigation = useNavigation();
@@ -66,15 +66,15 @@ export default function Feed({eye}) {
                 <ReceitaCard
                     eye={eye}
                     title={"Receita"}
-                    value={saldo.toFixed(2).replace('.', ',')}
-                    onPress={() => navigation.navigate("Saldo")}
+                    value={totalReceitas? totalReceitas.toFixed(2).replace('.', ',') : 0}
+                    onPress={() => navigation.navigate("Saldo", {tipo: "receita"})}
                     color={"#00FF00"}/>
 
                 <ReceitaCard
                     eye={eye}
                     title={"Despesa"}
-                    value={saldo.toFixed(2).replace('.', ',')}
-                    onPress={() => navigation.navigate("Saldo")}
+                    value={totalDespesas? totalDespesas.toFixed(2).replace('.', ',') : 0}
+                    onPress={() => navigation.navigate("Saldo", {tipo: "despesa"})}
                     color={"#FF0000"}/>
             </View>
             
