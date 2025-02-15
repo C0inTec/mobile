@@ -4,7 +4,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import styles from "./cardStyles";
 
-export default function WalletCard({ title, value, eye, onPress }) {
+const ValorText = ({ eye, value, color }) => (
+  <Text style={[styles.valorText, { color }]}>
+    {eye ? `R$ ${value}` : "•••••"}
+  </Text>
+);
+
+export default function WalletCard({ title, value, eye, onPress, color }) {
   return (
     <View style={styles.receitaComponent}>
       <View style={styles.contaRow}>
@@ -13,7 +19,7 @@ export default function WalletCard({ title, value, eye, onPress }) {
           <Icon name="chevron-right" size={30} color="white" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.valorText}>{eye ? `R$ ${value || "0,00"}` : "R$ ..."}</Text>
+      <ValorText eye={eye} value={value} color={color} />
     </View>
   );
 }

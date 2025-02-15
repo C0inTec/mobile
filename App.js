@@ -1,19 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 import Routes from './src/routes/routes';
+import { TransacoesProvider } from './contexts/TransacoesContext';
 
 export default function App() {
   return (
-        <Routes/>
+    <TransacoesProvider>
+      <Routes />
+    </TransacoesProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
