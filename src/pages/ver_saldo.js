@@ -11,17 +11,19 @@ import {
 import { MaskedTextInput } from "react-native-mask-text";
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { TransacoesContext } from "../../contexts/TransacoesContext";
 
 function Saldo() {
+  const route = useRoute();
+  const tipo = route.params ? route.params.tipo : "receita"
   const { saldo, historico, adicionarTransacao } = useContext(TransacoesContext);
   const [valor, setValor] = useState("0");
   const [maskedValue, setMaskedValue] = useState("R$ 0,00");
   const [descricao, setDescricao] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [tipoTransacao, setTipoTransacao] = useState("receita");
+  const [tipoTransacao, setTipoTransacao] = useState(tipo);
   const navigation = useNavigation();
 
   const formatarMoeda = (valor) => {

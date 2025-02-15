@@ -2,9 +2,13 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import Icon from "react-native-vector-icons/Feather";
-import styles from "./despesasChartStyle"; // Ajuste o caminho se necessário
+import { useNavigation } from '@react-navigation/native';
+
+import styles from "./despesasChartStyle"; 
 
 export default function DespesasChart({ chartData }) {
+    const navigation = useNavigation();
+  
   return (
     <View style={[styles.receitaChart, { marginTop: 20 }]}>
       {/* Título e botão */}
@@ -12,7 +16,7 @@ export default function DespesasChart({ chartData }) {
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
           Distribuição de Despesas
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate("Despesa")}>
           <Icon name="chevron-right" size={24} color="white" style={{ marginLeft: 10 }} />
         </TouchableOpacity>
       </View>

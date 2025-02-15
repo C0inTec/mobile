@@ -15,7 +15,7 @@ export default function Header({ eye, setEye, apiResponseUser, setModalPerfilVis
           <TouchableOpacity onPress={() => setEye(!eye)}>
             <Icon name={eye ? "eye-off" : "eye"} size={26} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> setModalPerfilVisible(!ModalPerfilVisible)}>
             <Icon name="settings" size={26} color="white" />
           </TouchableOpacity>
         </View>
