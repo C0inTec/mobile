@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from '@react-navigation/native';
 
 // Importando todas as rotas
 import Home from '../pages/ver_home';

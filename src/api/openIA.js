@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = "AIzaSyCsNRlmxIYPEJzgbGHKcIbC0f1CoQPTP1k";
+const API_KEY = 'AIzaSyCsNRlmxIYPEJzgbGHKcIbC0f1CoQPTP1k';
 
 export async function sendMessageToGemini(userMessage, conversation = []) {
   // Cria o chat atualizado com a mensagem do usuário

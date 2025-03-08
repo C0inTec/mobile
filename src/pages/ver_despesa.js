@@ -1,20 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
-import { View, TouchableOpacity, ScrollView, StyleSheet, Text } from "react-native";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/Feather";
-
-import { TransacoesContext } from '../../contexts/TransacoesContext';
-import SecondaryHeader from "../components/header/secondaryHeader";
+import SecondaryHeader from '../components/secondaryHeader';
 
 export default function Despesa() {
-
     const navigation = useNavigation();
-
 
     return (
         <View style={{ flex: 1 }}>
 
-            <SecondaryHeader title={"Despesas"} />
+            <SecondaryHeader title={'Despesas'} />
 
         </View>
     );

@@ -39,23 +39,23 @@ export default function Cadastro() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/Logo3.png")} style={{ width: 200, height: 150 }} />
+      <Image source={require('../../assets/Logo3.png')} style={{ width: 200, height: 150 }} />
       <Text style={styles.title}>É hora de iniciar sua jornada!</Text>
       <Text style={styles.text}>Crie sua conta e comece a transformar sua vida financeira!</Text>
 
       <View style={{ flexDirection: 'row' }}>
         <TextInput
-          style={[styles.input, { width: "48%" }]}
-          placeholder="Nome"
-          placeholderTextColor="#666666"
+          style={[styles.input, { width: '48%' }]}
+          placeholder='Nome'
+          placeholderTextColor='#666666'
           value={nome}
           onChangeText={setNome}
         />
 
         <TextInput
-          style={[styles.input, { width: "48%", marginLeft: 15 }]}
-          placeholder="Sobrenome"
-          placeholderTextColor="#666666"
+          style={[styles.input, { width: '48%', marginLeft: 15 }]}
+          placeholder='Sobrenome'
+          placeholderTextColor='#666666'
           value={sobrenome}
           onChangeText={setSobrenome}
         />
@@ -63,25 +63,25 @@ export default function Cadastro() {
 
       <TextInput
         style={styles.input}
-        placeholder="E-mail"
-        placeholderTextColor="#666666"
+        placeholder='E-mail'
+        placeholderTextColor='#666666'
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
+        keyboardType='email-address'
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#666666"
+        placeholder='Senha'
+        placeholderTextColor='#666666'
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
       />
       <TextInput
         style={styles.input}
-        placeholder="Confirme a senha"
-        placeholderTextColor="#666666"
+        placeholder='Confirme a senha'
+        placeholderTextColor='#666666'
         secureTextEntry
         value={senhaConfirma}
         onChangeText={setSenhaConfirma}
@@ -89,24 +89,24 @@ export default function Cadastro() {
 
       <TextInput
         style={styles.input}
-        placeholder="CPF"
-        placeholderTextColor="#666666"
+        placeholder='CPF'
+        placeholderTextColor='#666666'
         value={cpf}
         onChangeText={setCpf}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Contato"
-        placeholderTextColor="#666666"
+        placeholder='Contat'o
+        placeholderTextColor='#666666'
         value={contato}
         onChangeText={setContato}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Data de Aniversário"
-        placeholderTextColor="#666666"
+        placeholder='Data de Aniversário'
+        placeholderTextColor='#666666'
         value={dataAniversario}
         onChangeText={setData}
       />

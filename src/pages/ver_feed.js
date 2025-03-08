@@ -1,54 +1,51 @@
-import React, { useState, useEffect, useContext } from "react";
-import { View, TouchableOpacity, ScrollView, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect, useContext } from 'react';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/Feather";
-
-import WalletCard from "../components/cards/walletCard";
-import DespesasChart from "../components/charts/despesasChart";
-import ReceitaCard from "../components/cards/receitaCard";
-
+import WalletCard from '../components/walletCard';
+import DespesasChart from '../components/despesasChart';
+import ReceitaCard from '../components/receitaCard';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 export default function Feed({eye}) {
   const { saldo, totalReceitas, totalDespesas } = useContext(TransacoesContext);
-  const [apiResponseUser, setApiResponseUser] = useState("");
+  const [apiResponseUser, setApiResponseUser] = useState('');
   const [chartData, setChartData] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
     const despesasData = [
       {
-        name: "Contas",
+        name: 'Contas',
         population: 400,
-        color: "#F39C12",
-        legendFontColor: "#FFFFFF",
+        color: '#F39C12',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
       {
-        name: "Comida",
+        name: 'Comida',
         population: 300,
-        color: "#E74C3C",
-        legendFontColor: "#FFFFFF",
+        color: '#E74C3C',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
       {
-        name: "Lazer",
+        name: 'Lazer',
         population: 200,
-        color: "#8E44AD",
-        legendFontColor: "#FFFFFF",
+        color: '#8E44AD',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
       {
-        name: "Outros",
+        name: 'Outros',
         population: 100,
-        color: "#3498DB",
-        legendFontColor: "#FFFFFF",
+        color: '#3498DB',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
     ];
 
     setChartData(despesasData);
-    setApiResponseUser({ first_name: "João" });
+    setApiResponseUser({ first_name: 'João' });
   }, []);
 
   return (
@@ -56,33 +53,33 @@ export default function Feed({eye}) {
 
       <ScrollView
         style={styles.homeDiv}
-        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
-        keyboardShouldPersistTaps="handled"
-        contentInsetAdjustmentBehavior="always"
+        contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
+        keyboardShouldPersistTaps='handled'
+        contentInsetAdjustmentBehavior='always'
       >
 
         <View style={styles.contentBox}>
-            <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <ReceitaCard
                     eye={eye}
-                    title={"Receita"}
+                    title={'Receita'}
                     value={totalReceitas? totalReceitas.toFixed(2).replace('.', ',') : 0}
-                    onPress={() => navigation.navigate("Saldo", {tipo: "receita"})}
-                    color={"#00FF00"}/>
+                    onPress={() => navigation.navigate('Saldo', {tipo: 'receita'})}
+                    color={'#00FF00'}/>
 
                 <ReceitaCard
                     eye={eye}
-                    title={"Despesa"}
+                    title={'Despesa'}
                     value={totalDespesas? totalDespesas.toFixed(2).replace('.', ',') : 0}
-                    onPress={() => navigation.navigate("Saldo", {tipo: "despesa"})}
-                    color={"#FF0000"}/>
+                    onPress={() => navigation.navigate('Saldo', {tipo: 'despesa'})}
+                    color={'#FF0000'}/>
             </View>
             
           <WalletCard
-            title={"Saldo em contas"}
+            title={'Saldo em contas'}
             value={saldo.toFixed(2).replace('.', ',')}
             eye={eye}
-            onPress={() => navigation.navigate("Saldo")}
+            onPress={() => navigation.navigate('Saldo')}
             color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 

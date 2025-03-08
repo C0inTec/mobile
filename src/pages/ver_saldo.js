@@ -1,5 +1,5 @@
 // ver_saldo.js
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -7,29 +7,29 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-} from "react-native";
-import { MaskedTextInput } from "react-native-mask-text";
-import Icon from "react-native-vector-icons/Feather";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { TransacoesContext } from "../../contexts/TransacoesContext";
+} from 'react-native';
+import { MaskedTextInput } from 'react-native-mask-text';
+import Icon from 'react-native-vector-icons/Feather';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 function Saldo() {
   const route = useRoute();
-  const tipo = route.params ? route.params.tipo : "receita"
+  const tipo = route.params ? route.params.tipo : 'receita'
   const { saldo, historico, adicionarTransacao } = useContext(TransacoesContext);
-  const [valor, setValor] = useState("0");
-  const [maskedValue, setMaskedValue] = useState("R$ 0,00");
-  const [descricao, setDescricao] = useState("");
+  const [valor, setValor] = useState('0');
+  const [maskedValue, setMaskedValue] = useState('R$ 0,00');
+  const [descricao, setDescricao] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [tipoTransacao, setTipoTransacao] = useState(tipo);
   const navigation = useNavigation();
 
   const formatarMoeda = (valor) => {
-    return Number(valor).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    return Number(valor).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
@@ -49,21 +49,21 @@ function Saldo() {
       const novaTransacao = {
         id: Date.now().toString(),
         descricao: descricao.slice(0, 30),
-        valor: `${tipoTransacao === "receita" ? "+" : "-"} ${formatarMoeda(valorNumerico)}`,
-        cor: tipoTransacao === "receita" ? "#00FF00" : "#FF0000",
+        valor: `${tipoTransacao === 'receita' ? '+' : '-'} ${formatarMoeda(valorNumerico)}`,
+        cor: tipoTransacao === 'receita' ? '#00FF00' : '#FF0000',
         tipo: tipoTransacao,
       };
 
       adicionarTransacao(novaTransacao, valorNumerico);
 
-      setDescricao("");
-      setValor("0");
-      setMaskedValue("R$ 0,00");
+      setDescricao('');
+      setValor('0');
+      setMaskedValue('R$ 0,00');
     }
   };
 
   const isConfirmButtonEnabled = () => {
-    return parseFloat(valor) > 0 && descricao.trim() !== "";
+    return parseFloat(valor) > 0 && descricao.trim() !== '';
   };
 
   return (
@@ -71,10 +71,10 @@ function Saldo() {
       {/* Header da tela */}
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate('Home')}
           style={styles.backButton}
         >
-          <Icon name="arrow-left" size={24} color="#FFFFFF" />
+          <Icon name='arrow-left' size={24} color='#FFFFFF' />
         </TouchableOpacity>
         <Text style={styles.title}>Nova transação</Text>
       </View>
@@ -84,9 +84,9 @@ function Saldo() {
         <TouchableOpacity
           style={[
             styles.tipoButton,
-            tipoTransacao === "receita" && styles.receitaSelecionada,
+            tipoTransacao === 'receita' && styles.receitaSelecionada,
           ]}
-          onPress={() => setTipoTransacao("receita")}
+          onPress={() => setTipoTransacao('receita')}
         >
           <Text style={styles.tipoButtonText}>Receita</Text>
         </TouchableOpacity>
@@ -94,9 +94,9 @@ function Saldo() {
         <TouchableOpacity
           style={[
             styles.tipoButton,
-            tipoTransacao === "despesa" && styles.despesaSelecionada,
+            tipoTransacao === 'despesa' && styles.despesaSelecionada,
           ]}
-          onPress={() => setTipoTransacao("despesa")}
+          onPress={() => setTipoTransacao('despesa')}
         >
           <Text style={styles.tipoButtonText}>Despesa</Text>
         </TouchableOpacity>
@@ -107,26 +107,26 @@ function Saldo() {
         <Text style={styles.labelValor}>Valor da transação</Text>
         <View style={styles.inputRow}>
           <MaskedTextInput
-            type="currency"
+            type='currency'
             options={{
-              prefix: "R$ ",
-              decimalSeparator: ",",
-              groupSeparator: ".",
+              prefix: 'R$ ',
+              decimalSeparator: ',',
+              groupSeparator: '.',
               precision: 2,
             }}
             style={styles.inputValor}
-            keyboardType="number-pad"
+            keyboardType='number-pad'
             value={valor}
             selection={{
-              start: (maskedValue || "").length,
-              end: (maskedValue || "").length,
+              start: (maskedValue || '').length,
+              end: (maskedValue || '').length,
             }}
             onChangeText={(formatted, rawText) => {
-              setValor(rawText || "0");
+              setValor(rawText || '0');
               setMaskedValue(formatted);
             }}
-            placeholder="00,00"
-            placeholderTextColor="#FFFFFF"
+            placeholder='00,00'
+            placeholderTextColor='#FFFFFF'
           />
         </View>
       </View>
@@ -145,11 +145,11 @@ function Saldo() {
       {showDatePicker && (
         <DateTimePicker
           value={date}
-          mode="date"
-          display="default"
+          mode='date'
+          display='default'
           onChange={handleDateChange}
-          textColor="#000000"
-          themeVariant="light"
+          textColor='#FFFFFF'
+          themeVariant='light'
         />
       )}
 
@@ -158,8 +158,8 @@ function Saldo() {
         <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
         <TextInput
           style={styles.input}
-          placeholder="Digite uma descrição"
-          placeholderTextColor="#666666"
+          placeholder='Digite uma descrição'
+          placeholderTextColor='#666666'
           value={descricao}
           onChangeText={setDescricao}
           maxLength={30}
@@ -172,7 +172,7 @@ function Saldo() {
         <Text
           style={[
             styles.saldoValor,
-            { color: saldo > 0 ? "#00FF00" : saldo < 0 ? "#FF0000" : "#FFFFFF" },
+            { color: saldo > 0 ? '#00FF00' : saldo < 0 ? '#FF0000' : '#FFFFFF' },
           ]}
         >
           {formatarMoeda(saldo)}
@@ -214,12 +214,12 @@ function Saldo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
+    backgroundColor: '#000000',
     padding: 20,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 30,
   },
   backButton: {
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 20,
     marginLeft: 15,
   },
@@ -235,65 +235,65 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   labelValor: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 16,
     marginBottom: 10,
   },
   inputRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   inputValor: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 30,
     flex: 1,
     paddingVertical: 8,
   },
   dataSection: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 30,
   },
   dataButton: {
-    backgroundColor: "#FFD700",
+    backgroundColor: '#FFD700',
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 20,
     marginRight: 10,
   },
   dataButtonText: {
-    color: "#000000",
-    fontWeight: "bold",
+    color: '#000000',
+    fontWeight: 'bold',
   },
   inputContainer: {
     marginBottom: 20,
   },
   label: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 16,
     marginBottom: 10,
   },
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: "#333333",
-    color: "#FFFFFF",
+    borderBottomColor: '#333333',
+    color: '#FFFFFF',
     paddingVertical: 10,
   },
   confirmButton: {
-    backgroundColor: "#FFD700",
+    backgroundColor: '#FFD700',
     padding: 15,
     borderRadius: 8,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 20,
   },
   confirmButtonText: {
-    color: "#000000",
+    color: '#000000',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   historicoTitle: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 10,
   },
@@ -301,28 +301,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   historicoItem: {
-    flexDirection: "column",
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomColor: '#333333',
   },
   historicoDescricao: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 16,
     marginBottom: 5,
   },
   historicoValor: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   confirmButtonDisabled: {
-    backgroundColor: "#A9A9A9",
+    backgroundColor: '#A9A9A9',
     opacity: 0.5,
   },
   tipoContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 20,
   },
   tipoButton: {
@@ -330,32 +330,32 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     paddingVertical: 12,
     borderRadius: 8,
-    alignItems: "center",
-    backgroundColor: "#333333",
+    alignItems: 'center',
+    backgroundColor: '#333333',
   },
   receitaSelecionada: {
-    backgroundColor: "#00FF00",
+    backgroundColor: '#00FF00',
   },
   despesaSelecionada: {
-    backgroundColor: "#FF0000",
+    backgroundColor: '#FF0000',
   },
   tipoButtonText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
+    color: '#FFFFFF',
+    fontWeight: 'bold',
     fontSize: 16,
   },
   saldoContainer: {
     marginVertical: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   saldoLabel: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 18,
     marginBottom: 5,
   },
   saldoValor: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 

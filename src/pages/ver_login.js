@@ -33,23 +33,23 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/Logo3.png")} style={{width: 200, height: 150, marginTop: 50}}/>
+      <Image source={require('../../assets/Logo3.png')} style={{width: 200, height: 150, marginTop: 50}}/>
       <Text style={styles.title}>Bem vindo de volta!</Text>
       <Text style={styles.text}>Preencha o campo abaixo</Text>
       
       <TextInput
         style={styles.input}
-        placeholder="E-mail"
-        placeholderTextColor="#666666"
+        placeholder='E-mail'
+        placeholderTextColor='#666666'
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
+        keyboardType='email-address'
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#666666"
+        placeholder='Senha'
+        placeholderTextColor='#666666'
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
@@ -65,7 +65,7 @@ export default function Login() {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{marginTop: 20}} onPress={() => console.log("Esqueceu senha")}>
+      <TouchableOpacity style={{marginTop: 20}} onPress={() => console.log('Esqueceu senha')}>
         <Text style={styles.text}>Esqueceu a senha?</Text>
       </TouchableOpacity>
 

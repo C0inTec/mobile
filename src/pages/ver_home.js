@@ -1,61 +1,56 @@
-import React, { useState, useEffect, useContext } from "react";
-import { View, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import React, { useState, useEffect, useContext } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/Feather";
+import Icon from 'react-native-vector-icons/Feather';
 
-import ModalChat from "../components/modalChat";
-import ModalPerfil from "../components/modals/modalPerfil";
-import Header from "../components/header/header";
-import WalletCard from "../components/cards/walletCard";
-import DespesasChart from "../components/charts/despesasChart";
-import TabRoutes from "../routes/tabRoutes";
+import ModalChat from '../components/modalChat';
+import ModalPerfil from '../components/modals/modalPerfil';
+import Header from '../components/header/header';
+import TabRoutes from '../routes/tabRoutes';
 
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 export default function Home() {
-  const { saldo } = useContext(TransacoesContext);
   const [eye, setEye] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [ModalPerfilVisible, setModalPerfilVisible] = useState(false);
-  const [apiResponseUser, setApiResponseUser] = useState("");
-  const [apiResponseWallet, setApiResponseWallet] = useState("");
-  const [chartData, setChartData] = useState([]);
-  const navigation = useNavigation();
+  const [apiResponseUser, setApiResponseUser] = useState('');
+  const [setChartData] = useState([]);
 
   useEffect(() => {
     const despesasData = [
       {
-        name: "Contas",
+        name: 'Contas',
         population: 400,
-        color: "#F39C12",
-        legendFontColor: "#FFFFFF",
+        color: '#F39C12',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
       {
-        name: "Comida",
+        name: 'Comida',
         population: 300,
-        color: "#E74C3C",
-        legendFontColor: "#FFFFFF",
+        color: '#E74C3C',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
       {
-        name: "Lazer",
+        name: 'Lazer',
         population: 200,
-        color: "#8E44AD",
-        legendFontColor: "#FFFFFF",
+        color: '#8E44AD',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
       {
-        name: "Outros",
+        name: 'Outros',
         population: 100,
-        color: "#3498DB",
-        legendFontColor: "#FFFFFF",
+        color: '#3498DB',
+        legendFontColor: '#FFFFFF',
         legendFontSize: 10,
       },
     ];
 
     setChartData(despesasData);
-    setApiResponseUser({ first_name: "João" });
+    setApiResponseUser({ first_name: 'João' });
   }, []);
 
   const handleFabPress = () => {
@@ -63,7 +58,7 @@ export default function Home() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "black" }}>
+    <View style={{ flex: 1, backgroundColor: '#000000' }}>
       <Header
         eye={eye}
         setEye={setEye}
@@ -76,10 +71,10 @@ export default function Home() {
       <TabRoutes eye={eye}/>
 
       <TouchableOpacity
-        style={[styles.fab, { position: "absolute", top: "85%", right: 20 }]}
+        style={[styles.fab, { position: 'absolute', top: '85%', right: 20 }]}
         onPress={handleFabPress}
       >
-        <Icon name="terminal" size={24} color="#FFFFFF" />
+        <Icon name='terminal' size={24} color='#FFFFFF' />
       </TouchableOpacity>
 
       <ModalChat
