@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
-
 import ModalChat from '../components/modalChat';
 import ModalPerfil from '../components/modals/modalPerfil';
 import Header from '../components/header/header';

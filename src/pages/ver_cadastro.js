@@ -97,7 +97,7 @@ export default function Cadastro() {
 
       <TextInput
         style={styles.input}
-        placeholder='Contat'o
+        placeholder='Contato'
         placeholderTextColor='#666666'
         value={contato}
         onChangeText={setContato}
