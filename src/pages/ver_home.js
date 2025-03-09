@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 import ModalChat from '../components/chat_bot';
 import ModalPerfil from '../components/config_perfil';
 import Header from '../components/header';
 import TabRoutes from '../routes/tabRoutes';
 
 export default function Home() {
+  const navigation = useNavigation();
   const [eye, setEye] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [ModalPerfilVisible, setModalPerfilVisible] = useState(false);
@@ -53,6 +55,25 @@ export default function Home() {
     setModalVisible(true);
   };
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza de que deseja sair?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Sair',
+          style: 'destructive',
+          onPress: () => {
+            // Redireciona para a tela "Início"
+            navigation.navigate('Inicio');
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: '#000000' }}>
       <Header
@@ -63,14 +84,22 @@ export default function Home() {
         apiResponseUser={apiResponseUser}
       />
 
-      {/* A TOP BAR VAI ENTRAR AQUI */}
-      <TabRoutes eye={eye}/>
+      <TabRoutes eye={eye} />
 
+      {/* Botão Flutuante */}
       <TouchableOpacity
         style={[styles.fab, { position: 'absolute', top: '85%', right: 20 }]}
         onPress={handleFabPress}
       >
         <Icon name='terminal' size={24} color='#FFFFFF' />
+      </TouchableOpacity>
+
+      {/* Botão de Logout */}
+      <TouchableOpacity
+        style={styles.logoutButton}
+        onPress={handleLogout}
+      >
+        <Text style={styles.logoutButtonText}>Sair da Conta</Text>
       </TouchableOpacity>
 
       <ModalChat
@@ -97,5 +126,20 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
-  }
+  },
+  logoutButton: {
+    position: 'absolute',
+    bottom: 30,
+    alignSelf: 'center',
+    backgroundColor: '#E74C3C',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoutButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
