@@ -38,7 +38,7 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
         <View style={styles.chatHeader}>
           <Text style={styles.headerText}>Configurações de Perfil</Text>
           <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-            <Icon name='x' size={24} color='#FFFFFF' />
+            <Icon name='x' size={24} color='#000000' />
           </TouchableOpacity>
         </View>
 
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#000000', // Cabeçalho com cor secundária
+    backgroundColor: '#D4A413',
     padding: 16,
     width: '90%',
     borderTopLeftRadius: 8,
@@ -125,13 +125,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF', // Texto branco
+    color: '#000000',
   },
   closeButton: {
     padding: 8,
   },
   scrollContent: {
-    backgroundColor: '#FFFFFF', // Fundo branco para o conteúdo do modal
+    backgroundColor: '#FFFFFF',
     padding: 16,
     width: '90%',
     borderBottomLeftRadius: 8,
@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   saveButtonDisabled: {
-    backgroundColor: '#CCCCCC', // Botão desativado com cinza
+    backgroundColor: '#CCCCCC',
   },
   saveButtonText: {
-    color: '#FFFFFF', // Texto branco
+    color: '#000000',
     fontWeight: 'bold',
   },
   iconEdit: {
