@@ -24,9 +24,8 @@ export default function Cadastro() {
 
   // Função para enviar os dados para a API
   const sendDataToAPI = async () => {
-    const url = 'https://ab8f-2804-954-3c0-aa00-2cd2-b927-e182-6a51.ngrok-free.app/cadastrar'; // Endpoint da API
-
-    // Dados que serão enviados
+    const url = 'https://ab8f-2804-954-3c0-aa00-2cd2-b927-e182-6a51.ngrok-free.app/auth/register'; // Endpoint da API
+  
     const data = {
       nome,
       sobrenome,
@@ -35,31 +34,38 @@ export default function Cadastro() {
       cpf,
       contato,
       dataAniversario,
+      role: 'user',
     };
-
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Define o tipo de conteúdo
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Converte os dados em formato JSON
+        body: JSON.stringify(data),
       });
-
-      const result = await response.json(); // Obtém a resposta da API
+  
+      const responseText = await response.text(); // Obtém o texto completo da resposta
+      console.log('Resposta completa:', responseText);
+  
       if (response.ok) {
+        // Tenta converter para JSON apenas se a resposta for bem-sucedida
+        const result = JSON.parse(responseText); // Faz o parsing manualmente
         Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
-        navigation.navigate('EntradaUser'); // Navega para a próxima tela
+        navigation.navigate('EntradaUser');
       } else {
-        Alert.alert('Erro', result.message || 'Ocorreu um erro no cadastro.');
+        console.error('Erro na API:', responseText);
+        Alert.alert('Erro', responseText || 'Ocorreu um erro ao realizar o cadastro.');
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('Erro', 'Não foi possível realizar o cadastro.');
+      Alert.alert('Erro', 'Não foi possível realizar o cadastro. Tente novamente mais tarde.');
     } finally {
       setLoading(false);
     }
   };
+  
 
   const handleSave = () => {
     if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim()) {
