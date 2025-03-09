@@ -7,7 +7,10 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ScrollView,
+  Platform,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Cadastro() {
@@ -20,12 +23,13 @@ export default function Cadastro() {
   const [senhaConfirma, setSenhaConfirma] = useState('');
   const [cpf, setCpf] = useState('');
   const [contato, setContato] = useState('');
-  const [dataAniversario, setData] = useState('');
+  const [dataNascimento, setDataNascimento] = useState(null);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   // Função para enviar os dados para a API
   const sendDataToAPI = async () => {
     const url = 'https://ab8f-2804-954-3c0-aa00-2cd2-b927-e182-6a51.ngrok-free.app/auth/register'; // Endpoint da API
-  
+
     const data = {
       nome,
       sobrenome,
@@ -33,10 +37,10 @@ export default function Cadastro() {
       senha,
       cpf,
       contato,
-      dataAniversario,
+      dataNascimento,
       role: 'user',
     };
-  
+
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -45,12 +49,11 @@ export default function Cadastro() {
         },
         body: JSON.stringify(data),
       });
-  
+
       const responseText = await response.text(); // Obtém o texto completo da resposta
       console.log('Resposta completa:', responseText);
-  
+
       if (response.ok) {
-        // Tenta converter para JSON apenas se a resposta for bem-sucedida
         const result = JSON.parse(responseText); // Faz o parsing manualmente
         Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
         navigation.navigate('EntradaUser');
@@ -65,7 +68,6 @@ export default function Cadastro() {
       setLoading(false);
     }
   };
-  
 
   const handleSave = () => {
     if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim()) {
@@ -82,94 +84,116 @@ export default function Cadastro() {
     sendDataToAPI();
   };
 
+  const handleDateChange = (event, selectedDate) => {
+    setDatePickerVisible(false);
+    if (selectedDate) {
+      const formattedDate = selectedDate.toISOString().split('T')[0]; // Formata para 'YYYY-MM-DD'
+      setDataNascimento(formattedDate);
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/Logo3.png')} style={{ width: 200, height: 150 }} />
-      <Text style={styles.title}>É hora de iniciar sua jornada!</Text>
-      <Text style={styles.text}>Crie sua conta e comece a transformar sua vida financeira!</Text>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Image source={require('../../assets/Logo3.png')} style={{ width: 200, height: 150 }} />
+        <Text style={styles.title}>É hora de iniciar sua jornada!</Text>
+        <Text style={styles.text}>Crie sua conta e comece a transformar sua vida financeira!</Text>
 
-      <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+            style={[styles.input, { width: '48%' }]}
+            placeholder="Nome"
+            placeholderTextColor="#666666"
+            value={nome}
+            onChangeText={setNome}
+          />
+
+          <TextInput
+            style={[styles.input, { width: '48%', marginLeft: 15 }]}
+            placeholder="Sobrenome"
+            placeholderTextColor="#666666"
+            value={sobrenome}
+            onChangeText={setSobrenome}
+          />
+        </View>
+
         <TextInput
-          style={[styles.input, { width: '48%' }]}
-          placeholder="Nome"
+          style={styles.input}
+          placeholder="E-mail"
           placeholderTextColor="#666666"
-          value={nome}
-          onChangeText={setNome}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
         />
 
         <TextInput
-          style={[styles.input, { width: '48%', marginLeft: 15 }]}
-          placeholder="Sobrenome"
+          style={styles.input}
+          placeholder="Senha"
           placeholderTextColor="#666666"
-          value={sobrenome}
-          onChangeText={setSobrenome}
+          secureTextEntry
+          value={senha}
+          onChangeText={setSenha}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirme a senha"
+          placeholderTextColor="#666666"
+          secureTextEntry
+          value={senhaConfirma}
+          onChangeText={setSenhaConfirma}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="CPF"
+          placeholderTextColor="#666666"
+          value={cpf}
+          onChangeText={setCpf}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Contato"
+          placeholderTextColor="#666666"
+          value={contato}
+          onChangeText={setContato}
+        />
+
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setDatePickerVisible(true)}
+        >
+          <Text style={{ color: dataNascimento ? '#000' : '#666666' }}>
+            {dataNascimento || 'Data de Nascimento'}
+          </Text>
+        </TouchableOpacity>
+        {datePickerVisible && (
+          <DateTimePicker
+            value={dataNascimento ? new Date(dataNascimento) : new Date()}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            onChange={handleDateChange}
+          />
+        )}
+
+        <TouchableOpacity
+          style={[styles.button, loading && styles.saveButtonDisabled]}
+          onPress={handleSave}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? 'Carregando...' : 'Concluir'}
+          </Text>
+        </TouchableOpacity>
       </View>
-
-      <TextInput
-        style={styles.input}
-        placeholder="E-mail"
-        placeholderTextColor="#666666"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#666666"
-        secureTextEntry
-        value={senha}
-        onChangeText={setSenha}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirme a senha"
-        placeholderTextColor="#666666"
-        secureTextEntry
-        value={senhaConfirma}
-        onChangeText={setSenhaConfirma}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="CPF"
-        placeholderTextColor="#666666"
-        value={cpf}
-        onChangeText={setCpf}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Contato"
-        placeholderTextColor="#666666"
-        value={contato}
-        onChangeText={setContato}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Data de Aniversário"
-        placeholderTextColor="#666666"
-        value={dataAniversario}
-        onChangeText={setData}
-      />
-
-      <TouchableOpacity
-        style={[styles.button, loading && styles.saveButtonDisabled]}
-        onPress={handleSave}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? 'Carregando...' : 'Concluir'}
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -200,6 +224,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginVertical: 10,
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: '#D4A413',
