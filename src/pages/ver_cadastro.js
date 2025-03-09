@@ -16,28 +16,28 @@ import { useNavigation } from '@react-navigation/native';
 export default function Cadastro() {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [nome, setNome] = useState('');
-  const [sobrenome, setSobrenome] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [senhaConfirma, setSenhaConfirma] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [cpf, setCpf] = useState('');
-  const [contato, setContato] = useState('');
-  const [dataNascimento, setDataNascimento] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [dateOfBirthday, setDateOfBirthday] = useState(null);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   // Função para enviar os dados para a API
   const sendDataToAPI = async () => {
-    const url = 'https://ab8f-2804-954-3c0-aa00-2cd2-b927-e182-6a51.ngrok-free.app/auth/register'; // Endpoint da API
+    const url = 'https://b109-2804-954-ffcf-9a00-5d79-e4e8-a91c-6357.ngrok-free.app/auth/register'; // Endpoint da API
 
     const data = {
-      nome,
-      sobrenome,
+      first_name: firstName,
+      last_name: lastName,
       email,
-      senha,
+      password,
       cpf,
-      contato,
-      dataNascimento,
+      phone,
+      date_of_birthday: dateOfBirthday,
       role: 'user',
     };
 
@@ -56,7 +56,7 @@ export default function Cadastro() {
       if (response.ok) {
         const result = JSON.parse(responseText); // Faz o parsing manualmente
         Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
-        navigation.navigate('EntradaUser');
+        navigation.navigate('Login');
       } else {
         console.error('Erro na API:', responseText);
         Alert.alert('Erro', responseText || 'Ocorreu um erro ao realizar o cadastro.');
@@ -70,12 +70,12 @@ export default function Cadastro() {
   };
 
   const handleSave = () => {
-    if (!nome.trim() || !email.trim() || !senha.trim() || !senhaConfirma.trim()) {
+    if (!firstName.trim() || !email.trim() || !password.trim() || !passwordConfirm.trim()) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
 
-    if (senha !== senhaConfirma) {
+    if (password !== passwordConfirm) {
       Alert.alert('Erro', 'As senhas não coincidem. Verifique e tente novamente.');
       return;
     }
@@ -88,7 +88,7 @@ export default function Cadastro() {
     setDatePickerVisible(false);
     if (selectedDate) {
       const formattedDate = selectedDate.toISOString().split('T')[0]; // Formata para 'YYYY-MM-DD'
-      setDataNascimento(formattedDate);
+      setDateOfBirthday(formattedDate);
     }
   };
 
@@ -104,16 +104,16 @@ export default function Cadastro() {
             style={[styles.input, { width: '48%' }]}
             placeholder="Nome"
             placeholderTextColor="#666666"
-            value={nome}
-            onChangeText={setNome}
+            value={firstName}
+            onChangeText={setFirstName}
           />
 
           <TextInput
             style={[styles.input, { width: '48%', marginLeft: 15 }]}
             placeholder="Sobrenome"
             placeholderTextColor="#666666"
-            value={sobrenome}
-            onChangeText={setSobrenome}
+            value={lastName}
+            onChangeText={setLastName}
           />
         </View>
 
@@ -131,16 +131,16 @@ export default function Cadastro() {
           placeholder="Senha"
           placeholderTextColor="#666666"
           secureTextEntry
-          value={senha}
-          onChangeText={setSenha}
+          value={password}
+          onChangeText={setPassword}
         />
         <TextInput
           style={styles.input}
           placeholder="Confirme a senha"
           placeholderTextColor="#666666"
           secureTextEntry
-          value={senhaConfirma}
-          onChangeText={setSenhaConfirma}
+          value={passwordConfirm}
+          onChangeText={setPasswordConfirm}
         />
 
         <TextInput
@@ -155,21 +155,21 @@ export default function Cadastro() {
           style={styles.input}
           placeholder="Contato"
           placeholderTextColor="#666666"
-          value={contato}
-          onChangeText={setContato}
+          value={phone}
+          onChangeText={setPhone}
         />
 
         <TouchableOpacity
           style={styles.input}
           onPress={() => setDatePickerVisible(true)}
         >
-          <Text style={{ color: dataNascimento ? '#000' : '#666666' }}>
-            {dataNascimento || 'Data de Nascimento'}
+          <Text style={{ color: dateOfBirthday ? '#000' : '#666666' }}>
+            {dateOfBirthday || 'Data de Nascimento'}
           </Text>
         </TouchableOpacity>
         {datePickerVisible && (
           <DateTimePicker
-            value={dataNascimento ? new Date(dataNascimento) : new Date()}
+            value={dateOfBirthday ? new Date(dateOfBirthday) : new Date()}
             mode="date"
             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
             onChange={handleDateChange}
