@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, Modal, Image, TextInput, Vibration, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import styles from './modalPerfilStyle';
 
 export default function ModalPerfil({ modalVisible, setModalVisible }) {
   const [loading, setLoading] = useState(false);
@@ -39,7 +38,7 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
         <View style={styles.chatHeader}>
           <Text style={styles.headerText}>Configurações de Perfil</Text>
           <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-            <Icon name='x' size={24} color='#000000' />
+            <Icon name='x' size={24} color='#FFFFFF' />
           </TouchableOpacity>
         </View>
 
@@ -50,7 +49,7 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
           />
           <View style={{ position: 'relative', alignSelf: 'center' }}>
             <TouchableOpacity style={styles.iconEdit} onPress={() => Vibration.vibrate()}>
-              <Icon name='edit' size={20} color='#000000' />
+              <Icon name='edit' size={20} color='#FFFFFF' />
             </TouchableOpacity>
           </View>
 
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#0000000', // Cabeçalho com cor secundária
+    backgroundColor: '#000000', // Cabeçalho com cor secundária
     padding: 16,
     width: '90%',
     borderTopLeftRadius: 8,

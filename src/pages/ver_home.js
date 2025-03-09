@@ -2,18 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import ModalChat from '../components/modalChat';
-import ModalPerfil from '../components/modals/modalPerfil';
-import Header from '../components/header/header';
+import ModalPerfil from '../components/modalPerfil';
+import Header from '../components/header';
 import TabRoutes from '../routes/tabRoutes';
-
-import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 export default function Home() {
   const [eye, setEye] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [ModalPerfilVisible, setModalPerfilVisible] = useState(false);
   const [apiResponseUser, setApiResponseUser] = useState('');
-  const [setChartData] = useState([]);
+  const [ChartDara, setChartData] = useState([]);
 
   useEffect(() => {
     const despesasData = [

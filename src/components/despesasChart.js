@@ -11,11 +11,11 @@ export default function DespesasChart({ chartData }) {
     <View style={[styles.receitaChart, { marginTop: 20 }]}>
       {/* Título e botão */}
       <View style={styles.contaRow}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>
           Distribuição de Despesas
         </Text>
         <TouchableOpacity onPress={()=> navigation.navigate('Despesa')}>
-          <Icon name='chevron-right' size={24} color='#000000' style={{ marginLeft: 10 }} />
+          <Icon name='chevron-right' size={24} color='#FFFFFF' style={{ marginLeft: 10 }} />
         </TouchableOpacity>
       </View>
 
@@ -43,7 +43,7 @@ export default function DespesasChart({ chartData }) {
 
 const styles = StyleSheet.create({
   receitaChart: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#000000',
     width: '100%',
     height: 290,  // Remova as aspas do número
     borderColor: '#C0C0C0',
