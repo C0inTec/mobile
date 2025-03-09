@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import WalletCard from '../components/walletCard';
-import DespesasChart from '../components/despesasChart';
+import DespesasChart from '../components/grafico_despesas';
 import ReceitaCard from '../components/receitaCard';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 

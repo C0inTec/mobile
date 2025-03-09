@@ -1,6 +1,6 @@
 import { Text, View, TouchableOpacity, ScrollView, Modal, TextInput, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { sendMessageToGemini } from '../api/openIA';
+import { sendMessageToGemini } from '../api/gemini';
 import Icon from 'react-native-vector-icons/Feather';
 
 export default function ModalChat({ modalVisible, setModalVisible }) {

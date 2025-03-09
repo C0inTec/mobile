@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import ModalChat from '../components/modalChat';
-import ModalPerfil from '../components/modalPerfil';
+import ModalChat from '../components/chat_bot';
+import ModalPerfil from '../components/config_perfil';
 import Header from '../components/header';
 import TabRoutes from '../routes/tabRoutes';
 
