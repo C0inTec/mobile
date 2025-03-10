@@ -9,6 +9,17 @@ export const TransacoesProvider = ({ children }) => {
   const [totalReceitas, setTotalReceitas] = useState(0);
   const [totalDespesas, setTotalDespesas] = useState(0);
 
+  // APAGAR REGISTROS
+  // useEffect(() => {
+  //   const resetStorage = async () => {
+  //     await AsyncStorage.clear();
+  //     console.log('AsyncStorage resetado!');
+  //   };
+  
+  //   resetStorage();
+  // }, []); 
+
+
   // Carregar dados salvos ao iniciar
   const carregarDados = async () => {
     try {

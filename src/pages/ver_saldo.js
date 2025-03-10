@@ -23,8 +23,10 @@ function Saldo() {
   const [descricao, setDescricao] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
   const [tipoTransacao, setTipoTransacao] = useState(tipo);
   const navigation = useNavigation();
+  
 
   const formatarMoeda = (valor) => {
     return Number(valor).toLocaleString('pt-BR', {
@@ -42,23 +44,40 @@ function Saldo() {
     }
   };
 
+  const categorias = [
+    { name: 'Salário', color: '#2ECC71', tipo: 'receita' },
+    { name: 'Bonus', color: '#3498DB', tipo: 'receita' },
+    { name: 'Rendimentos Passivos', color: '#3498DB', tipo: 'receita' },
+    { name: 'Freelancer', color: '#3498DB', tipo: 'receita' },
+    { name: 'Dividendos', color: '#3498DB', tipo: 'receita' },
+    { name: 'Outros', color: '#3498DB', tipo: 'receita' },
+    { name: 'Contas', color: '#F39C12', tipo: 'despesa' },
+    { name: 'Água', color: '#F39C12', tipo: 'despesa' },
+    { name: 'Luz', color: '#F39C12', tipo: 'despesa' },
+    { name: 'Comida', color: '#E74C3C', tipo: 'despesa' },
+    { name: 'Lazer', color: '#8E44AD', tipo: 'despesa' },
+    { name: 'Outros', color: '#3498DB', tipo: 'despesa' },
+  ];
+  
+
   const handleConfirm = () => {
     if (isConfirmButtonEnabled()) {
       const valorNumerico = parseFloat(valor) / 100;
-
+  
       const novaTransacao = {
         id: Date.now().toString(),
         descricao: descricao.slice(0, 30),
         valor: `${tipoTransacao === 'receita' ? '+' : '-'} ${formatarMoeda(valorNumerico)}`,
         cor: tipoTransacao === 'receita' ? '#00FF00' : '#FF0000',
         tipo: tipoTransacao,
+        categoria: categoriaSelecionada || 'Outros',
       };
-
+  
       adicionarTransacao(novaTransacao, valorNumerico);
-
       setDescricao('');
       setValor('0');
       setMaskedValue('R$ 0,00');
+      setCategoriaSelecionada(null);
     }
   };
 
@@ -152,6 +171,28 @@ function Saldo() {
           themeVariant='light'
         />
       )}
+
+    <View style={styles.categoriaContainer}>
+      <Text style={styles.label}>Categoria</Text>
+      <FlatList
+        data={categorias.filter(cat => cat.tipo === tipoTransacao)}
+        horizontal
+        keyExtractor={item => item.name}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={[
+              styles.categoriaButton,
+              categoriaSelecionada === item.name && { backgroundColor: item.color }
+            ]}
+            onPress={() => setCategoriaSelecionada(item.name)}
+          >
+            <Text style={styles.categoriaText}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
+
+      
 
       {/* Campo de descrição */}
       <View style={styles.inputContainer}>
@@ -355,6 +396,23 @@ const styles = StyleSheet.create({
   },
   saldoValor: {
     fontSize: 24,
+    fontWeight: 'bold',
+  },
+  categoriaContainer: {
+    marginBottom: 20,
+  },
+  categoriaButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 6,
+    backgroundColor: '#333333',
+    marginRight: 10,
+    marginBottom: 5,
+    alignItems: 'center',
+  },
+  categoriaText: {
+    color: '#FFFFFF',
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
