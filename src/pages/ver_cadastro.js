@@ -28,7 +28,7 @@ export default function Cadastro() {
 
   // Função para enviar os dados para a API
   const sendDataToAPI = async () => {
-    const url = 'https://b109-2804-954-ffcf-9a00-5d79-e4e8-a91c-6357.ngrok-free.app/auth/register'; // Endpoint da API
+    const url = 'https://5c1f-2804-29b8-50ae-d6de-d415-5b6d-ccec-8549.ngrok-free.app/auth/register'; // Endpoint da API
 
     const data = {
       first_name: firstName,

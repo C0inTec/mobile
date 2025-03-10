@@ -57,7 +57,7 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
           <View style={styles.chatHeader}>
             <Text style={styles.chatTitle}>Chat com CoinBot</Text>
             <TouchableOpacity onPress={closeModal}>
-              <Icon name="x" size={24} color='#FFFFFF' />
+              <Icon name="x" size={24} color='#00000' />
             </TouchableOpacity>
           </View>
 
@@ -110,16 +110,16 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
 }
 
 const styles = StyleSheet.create({
-  modalContainer: {
+   modalContainer: {
     flex: 1,
-    backgroundColor: '#00000080',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   chatBox: {
     width: '90%',
     height: '70%',
-    backgroundColor: '#000000',
+    backgroundColor: 'white',
     borderRadius: 10,
     padding: 10,
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#DDDDDD',
+    borderBottomColor: '#ddd',
     paddingBottom: 10,
   },
   chatTitle: {
@@ -141,27 +141,27 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: 'black',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: '#DDDDDD',
+    borderTopColor: '#ddd',
     paddingTop: 10,
   },
   input: {
     flex: 1,
     height: 40,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#f5f5f5',
     borderRadius: 20,
     paddingHorizontal: 15,
     fontSize: 14,
-    color: '#FFFFFF',
+    color: 'black',
   },
   sendButton: {
     marginLeft: 10,
-    backgroundColor: '#D4A413',
+    backgroundColor: '#d4a413',
     width: 40,
     height: 40,
     borderRadius: 20,

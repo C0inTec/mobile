@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Modal, Image, TextInput, Vibration, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Modal, Image, TextInput, Vibration, StyleSheet, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 export default function ModalPerfil({ modalVisible, setModalVisible }) {
@@ -8,6 +9,7 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
   const [profileType] = useState('PF'); // PF = Pessoa Física, PJ = Pessoa Jurídica
   const [fieldOfWork, setFieldOfWork] = useState('');
   const [salary, setSalary] = useState('');
+  const navigation = useNavigation();
 
   const closeModal = () => {
     setModalVisible(false);
@@ -26,6 +28,26 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
       });
     }, 2000);
   };
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza de que deseja sair?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Sair',
+          style: 'destructive',
+          onPress: () => {
+            // Redireciona para a tela "Início"
+            navigation.navigate('Inicio');
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+  
 
   return (
     <Modal
@@ -88,6 +110,8 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
             value={salary}
             onChangeText={setSalary}
           />
+          
+         
 
           {/* Botão de Salvar */}
           <TouchableOpacity
@@ -99,16 +123,33 @@ export default function ModalPerfil({ modalVisible, setModalVisible }) {
               {loading ? 'Salvando...' : 'Salvar'}
             </Text>
           </TouchableOpacity>
+
+           {/* Botão de Logout */}
+           <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={handleLogout}
+          >
+            <Text style={styles.logoutButtonText}>
+              Sair da Conta
+            </Text>
+          </TouchableOpacity>
+          
         </View>
       </View>
     </Modal>
   );
 }
 
+const corPrimaria = '#d4a413';
+const corSecundaria = '#0a0a0a';
+const corTexto = 'white';
+const corBorda = '#c0c0c0';
+const corPreta = 'black';
+
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: '#00000080', // Mantido para o fundo transparente
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Mantido para o fundo transparente
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -116,8 +157,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#D4A413',
-    padding: 16,
+    backgroundColor: 'white', // Cabeçalho com cor secundária
+    padding: 12,
     width: '90%',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -125,13 +166,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000000',
+    color: 'black', // Texto branco
   },
   closeButton: {
     padding: 8,
   },
   scrollContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: corTexto, // Fundo branco para o conteúdo do modal
     padding: 16,
     width: '90%',
     borderBottomLeftRadius: 8,
@@ -140,51 +181,67 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     marginBottom: 8,
-    color: '#000000', // Cor preta para os textos
+    color: corPreta, // Cor preta para os textos
   },
   input: {
     borderWidth: 1,
-    borderColor: '#C0C0C0', // Borda cinza
+    borderColor: corBorda, // Borda cinza
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
-    color: '#000000', // Texto preto
-    backgroundColor: '#F9F9F9', // Fundo cinza claro
+    color: corPreta, // Texto preto
+    backgroundColor: '#f9f9f9', // Fundo cinza claro
   },
   errorText: {
-    color: '#FF0000', // Mensagem de erro em vermelho
+    color: 'red', // Mensagem de erro em vermelho
     marginBottom: 16,
   },
   saveButton: {
-    backgroundColor: '#D4A413', // Botão com a cor primária
+    backgroundColor: corPrimaria, // Botão com a cor primária
     padding: 12,
+    marginTop: 5,
     borderRadius: 8,
     alignItems: 'center',
   },
   saveButtonDisabled: {
-    backgroundColor: '#CCCCCC',
+    backgroundColor: '#ccc', // Botão desativado com cinza
   },
   saveButtonText: {
-    color: '#000000',
+    color: corTexto, // Texto branco
     fontWeight: 'bold',
   },
   iconEdit: {
     position: 'absolute',
     bottom: 0, // Alinha ao fundo da imagem
     left: 15, // Alinha à esquerda da imagem
-    backgroundColor: '#D4A413', // Opcional, adiciona contraste ao ícone
+    backgroundColor: corPrimaria, // Opcional, adiciona contraste ao ícone
     borderRadius: 15, // Torna o fundo arredondado
     padding: 5, // Adiciona um pequeno espaçamento interno
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: '#C0C0C0', // Borda cinza
+    borderColor: '#c0c0c0', // Borda cinza
     borderRadius: 8,
     marginBottom: 16,
-    backgroundColor: '#F9F9F9', // Fundo cinza claro
+    backgroundColor: '#f9f9f9', // Fundo cinza claro
   },
   picker: {
     height: 40,
-    color: '#000000', // Cor do texto
+    color: 'black', // Cor do texto
+  },
+  logoutButton: {
+    alignSelf: 'center',
+    marginTop: 20,
+    backgroundColor: '#E74C3C',
+    padding: 12,
+    borderRadius: 8,
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoutButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
