@@ -131,8 +131,8 @@ export default function Feed({eye}) {
       legendFontSize: 10,
     }));
   
-    console.log("Dados do gráfico de despesas:", despesasDataAtualizado); // Verifique os dados no console
-    console.log("Dados do gráfico de receitas:", receitasDataAtualizado); // Verifique os dados no console
+    // console.log("Dados do gráfico de despesas:", despesasDataAtualizado); // Verifique os dados no console
+    // console.log("Dados do gráfico de receitas:", receitasDataAtualizado); // Verifique os dados no console
   
     setChartDespesaData(despesasDataAtualizado);
     setChartReceitaData(receitasDataAtualizado);
@@ -150,6 +150,15 @@ export default function Feed({eye}) {
       >
 
         <View style={styles.contentBox}>
+
+        <WalletCard
+            title={'Saldo em contas'}
+            value={saldo.toFixed(2).replace('.', ',')}
+            eye={eye}
+            onPress={() => navigation.navigate('Saldo')}
+            color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
+          />
+
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <ReceitaCard
                     eye={eye}
@@ -164,10 +173,11 @@ export default function Feed({eye}) {
                     value={totalDespesas? totalDespesas.toFixed(2).replace('.', ',') : 0}
                     onPress={() => navigation.navigate('Saldo', {tipo: 'despesa'})}
                     color={'#FF0000'}/>
-            </View>
-            
+            </View>            
+          
+
           <WalletCard
-            title={'Saldo em contas'}
+            title={'Investimentos'}
             value={saldo.toFixed(2).replace('.', ',')}
             eye={eye}
             onPress={() => navigation.navigate('Saldo')}
@@ -177,6 +187,7 @@ export default function Feed({eye}) {
           <PieLocalChart titulo= {'Despesas'} chartData={chartDespesaData} />
 
           <PieLocalChart titulo= {'Receitas'} chartData={chartReceitaData} />
+
         </View>
       </ScrollView>
     </View>

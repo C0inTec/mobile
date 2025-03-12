@@ -9,40 +9,40 @@ export default function PieLocalChart({ titulo, chartData }) {
   
   return (
     <View style={[styles.receitaChart, { marginTop: 20 }]}>
-      {/* Título e botão */}
-      <View style={styles.contaRow}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>
-          Distribuição de {titulo}
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Despesa')}>
-          <Icon name='chevron-right' size={24} color='#FFFFFF' style={{ marginLeft: 10 }} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Gráfico ou mensagem */}
-      <View style={{ alignItems: 'center', marginTop: 15 }}>
-        {chartData && chartData.length > 0 ? (
-          <PieChart
-            data={chartData}
-            width={300}
-            height={220}
-            chartConfig={{
-              backgroundColor: '#FFFFFF',
-              backgroundGradientFrom: '#FFFFFF',
-              backgroundGradientTo: '#FFFFFF',
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            }}
-            accessor='population'
-            backgroundColor='transparent'
-            paddingLeft='15'
-            absolute
-          />
-        ) : (
-          <Text style={{ fontSize: 16, color: '#808080', fontWeight: 'bold', marginTop: 70}}>
-            Nenhum dado disponível para exibição.
+      <TouchableOpacity onPress={() => navigation.navigate('Despesa')}>
+        {/* Título e botão */}
+        <View style={styles.contaRow}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>
+            Distribuição de {titulo}
           </Text>
-        )}
-      </View>
+            <Icon name='chevron-right' size={24} color='#FFFFFF' style={{ marginLeft: 10 }} />
+        </View>
+
+        {/* Gráfico ou mensagem */}
+        <View style={{ alignItems: 'center', marginTop: 15 }}>
+          {chartData && chartData.length > 0 ? (
+            <PieChart
+              data={chartData}
+              width={300}
+              height={220}
+              chartConfig={{
+                backgroundColor: '#FFFFFF',
+                backgroundGradientFrom: '#FFFFFF',
+                backgroundGradientTo: '#FFFFFF',
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              accessor='population'
+              backgroundColor='transparent'
+              paddingLeft='15'
+              absolute
+            />
+          ) : (
+            <Text style={{ fontSize: 16, color: '#808080', fontWeight: 'bold', marginTop: 70}}>
+              Nenhum dado disponível para exibição.
+            </Text>
+          )}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

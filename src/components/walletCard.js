@@ -12,13 +12,17 @@ const ValorText = ({ eye, value, color }) => (
 export default function WalletCard({ title, value, eye, onPress, color }) {
   return (
     <View style={styles.receitaComponent}>
-      <View style={styles.contaRow}>
-        <Text style={styles.contaText}>{title}</Text>
-        <TouchableOpacity onPress={onPress}>
-          <Icon name='chevron-right' size={30} color='#FFFFFF' />
-        </TouchableOpacity>
-      </View>
-      <ValorText eye={eye} value={value} color={color} />
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.contaRow}>
+          <Text style={styles.contaText}>{title}</Text>
+            {title === "Investimentos"?
+            <Icon name='trending-up' size={29} color='#FFFFFF' />
+            :
+            <Icon name='chevron-right' size={30} color='#FFFFFF' />
+            }
+        </View>
+        <ValorText eye={eye} value={value} color={title==="Investimentos"? "#3498DB" : color} />
+      </TouchableOpacity>
     </View>
   );
 }

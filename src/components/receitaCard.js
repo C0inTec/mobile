@@ -12,13 +12,17 @@ const ValorText = ({ eye, value, color }) => (
 export default function ReceitaCard({ title, value, eye, onPress, color }) {
   return (
     <View style={styles.receitaComponent}>
-      <View style={styles.contaRow}>
-        <Text style={styles.contaText}>{title}</Text>
-        <TouchableOpacity onPress={onPress}>
-          <Icon name='chevron-right' size={30} color='#FFFFFF' />
-        </TouchableOpacity>
-      </View>
-      <ValorText eye={eye} value={value} color={color} />
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.contaRow}>
+          <Text style={styles.contaText}>{title}</Text>
+          {title === "Receita"?
+          <Icon name="arrow-right" size={20} color={color}/> 
+          :
+          <Icon name="arrow-left" size={20} color={color} />
+          }
+        </View>
+        <ValorText eye={eye} value={value} color={color} />
+      </TouchableOpacity>
     </View>
   );
 }
