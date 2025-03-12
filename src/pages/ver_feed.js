@@ -7,7 +7,7 @@ import { TransacoesContext } from '../../contexts/TransacoesContext';
 import PieLocalChart from '../components/grafico_despesas';
 
 export default function Feed({eye}) {
-  const { saldo, historico, totalReceitas, totalDespesas } = useContext(TransacoesContext);
+  const { saldo, historico, totalReceitas, totalDespesas, totalInvestimentos } = useContext(TransacoesContext);
   const [apiResponseUser, setApiResponseUser] = useState('');
   const [chartDespesaData, setChartDespesaData] = useState([]);
   const [chartReceitaData, setChartReceitaData] = useState([]);
@@ -155,7 +155,7 @@ export default function Feed({eye}) {
             title={'Saldo em contas'}
             value={saldo.toFixed(2).replace('.', ',')}
             eye={eye}
-            onPress={() => navigation.navigate('Saldo')}
+            onPress={() => navigation.navigate('Historico')}
             color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 
@@ -178,9 +178,9 @@ export default function Feed({eye}) {
 
           <WalletCard
             title={'Investimentos'}
-            value={saldo.toFixed(2).replace('.', ',')}
+            value={totalInvestimentos? totalInvestimentos.toFixed(2).replace('.', ','): 0}
             eye={eye}
-            onPress={() => navigation.navigate('Saldo')}
+            onPress={() => navigation.navigate('Investimentos')}
             color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 
