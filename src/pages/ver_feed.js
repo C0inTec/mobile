@@ -52,7 +52,11 @@ export default function Feed({eye}) {
     }, [historico]);
   
     if (loading) {
-      return <ActivityIndicator size="large" color="#FFFFFF" />;
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#FFFFFF" />
+        </View>
+      );
     }
 
   return (
@@ -100,7 +104,7 @@ export default function Feed({eye}) {
             color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 
-          <HealthCard perfil={relatorio.descricao} eye={eye} onPress={() => console.log("Tela de Dica") }/>
+          <HealthCard perfil={relatorio.descricao? relatorio.descricao : ''} eye={eye} onPress={() => navigation.navigate("DicasIA", {historico})}/>
 
         </View>
       </ScrollView>
@@ -120,5 +124,11 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '100%',
     alignSelf: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0A0A0A',
   }
 });

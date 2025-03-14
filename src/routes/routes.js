@@ -10,6 +10,7 @@ import Saldo from '../pages/ver_saldo';
 import Despesa from '../pages/ver_despesa';
 import HistoricoTransacoes from '../pages/ver_historico';
 import Investimentos from '../pages/ver_investimentos';
+import DicasIA from '../pages/ver_dicas';
 
 
 const Stack = createStackNavigator();
@@ -26,6 +27,7 @@ export default function Routes() {
             <Stack.Screen name='Despesa' component={Despesa} screenOptions={{ headerShown: false}} />
             <Stack.Screen name='Investimentos' component={Investimentos} screenOptions={{ headerShown: false}} />
             <Stack.Screen name='Historico' component={HistoricoTransacoes} screenOptions={{ headerShown: false}} />
+            <Stack.Screen name='DicasIA' component={DicasIA} screenOptions={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
   );
