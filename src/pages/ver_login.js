@@ -24,7 +24,7 @@ export default function Login() {
 
     setLoading(true);
 
-    const url = 'https://b109-2804-954-ffcf-9a00-5d79-e4e8-a91c-6357.ngrok-free.app/auth/login'; // Endpoint da API de login
+    const url = 'https://fc4e-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/auth/login'; // Endpoint da API de login
     const data = {
       email: email,
       password: senha,
