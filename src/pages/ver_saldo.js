@@ -49,7 +49,6 @@ function Saldo() {
     { name: 'Rendimentos Passivos', color: '#2ECC71', tipo: 'receita' },
     { name: 'Freelancer', color: '#2ECC71', tipo: 'receita' },
     { name: 'Dividendos', color: '#2ECC71', tipo: 'receita' },
-    { name: 'Outros', color: '#3498DB', tipo: 'receita' },
     { name: 'Aluguel', color: '#E74C3C', tipo: 'despesa' },
     { name: 'Contas', color: '#E74C3C', tipo: 'despesa' },
     { name: 'Alimentação', color: '#E74C3C', tipo: 'despesa' },
@@ -57,7 +56,6 @@ function Saldo() {
     { name: 'Educação', color: '#E74C3C', tipo: 'despesa' },
     { name: 'Saúde', color: '#E74C3C', tipo: 'despesa' },
     { name: 'Lazer', color: '#E74C3C', tipo: 'despesa' },
-    { name: 'Outros', color: '#F39C12', tipo: 'despesa' },
   ];
 
   const handleConfirm = () => {

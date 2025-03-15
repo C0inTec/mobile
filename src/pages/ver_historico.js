@@ -63,6 +63,10 @@ export default function HistoricoTransacoes() {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.historicoItem}>
+                        <Text style={styles.historicoDescricao}>
+                            {new Date(item.data).toLocaleDateString()}
+                        </Text>
+                        <Text style={styles.historicoDescricao}>{item.categoria}</Text>
                         <Text style={styles.historicoDescricao}>{item.descricao}</Text>
                         <Text style={[styles.historicoValor, { color: item.cor }]}>
                             {item.valor}
