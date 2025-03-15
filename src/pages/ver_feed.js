@@ -15,7 +15,30 @@ export default function Feed({eye}) {
   
    // Função para formatar os dados para a API
     const prepararDadosParaAPI = () => {
-      const categorias = {"Água":0,"Celular":0,"Luz":0,"Internet":0,"Aluguel":0,"Cartão":0,"Lazer":0,"Apostas":0,"Emprego Fixo":0,"Bicos":0}
+      const categorias = {
+        "ganhos": {
+          "salario": 500.00,
+          "bonus": 300.00,
+          "outros": 150.00,
+          "freelas": 800.00,
+          "dividendos": 100.00
+        },
+        "despesas": {
+          "agua": 0,
+          "celular": 0,
+          "luz": 0,
+          "internet": 0,
+          "aluguel": 1200.00,
+          "cartao": 400.00,
+          "lazer": 250.00,
+          "apostas": 0
+        },
+        "investimentos": {
+          "poupanca": 0,
+          "renda_variavel": 4100.00
+        }
+      }
+      
   
       historico.forEach(({ categoria, valor }) => {
         const valorNumerico = parseFloat(valor.replace(/[+\-R$\s]/g, '').replace(',', '.'));
@@ -33,7 +56,7 @@ export default function Feed({eye}) {
     const consultarAPI = async () => {
       try {
         const payload = prepararDadosParaAPI();
-        const resposta = await fetch('http://192.168.1.7:5000/classificar', {
+        const resposta = await fetch('https://ia-8k38.onrender.com/classificar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
