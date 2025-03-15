@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import PieLocalChart from '../components/grafico_despesas';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import PieLocalChart from '../components/graficos';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 export default function Relatorio() {
-
-  const navigation = useNavigation();
   const { historico } = useContext(TransacoesContext);
   const [chartDespesaData, setChartDespesaData] = useState([]);
   const [chartReceitaData, setChartReceitaData] = useState([]);

@@ -7,11 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 export default function PieLocalChart({ titulo, chartData }) {
   const navigation = useNavigation();
   
+  // Define o filtro com base no título do card
+  const filtroParam = titulo === 'Despesas' ? 'despesa' : titulo === 'Receitas' ? 'receita' : '';
+
   return (
     <View style={[styles.receitaChart, { marginTop: 20 }]}>
       <TouchableOpacity
-        // Redireciona para a tela desejada e passa o parâmetro para selecionar "despesa"
-        onPress={() => navigation.navigate('Historico', { filtro: 'despesa' })}
+        onPress={() => navigation.navigate('Historico', { filtro: filtroParam })}
       >
         {/* Título e botão */}
         <View style={styles.contaRow}>

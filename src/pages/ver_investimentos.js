@@ -63,7 +63,7 @@ export default function Investimentos() {
         }
     };
 
-    const handleDateChange = (selectedDate) => {
+    const handleDateChange = (event, selectedDate) => {
         setShowDatePicker(false);
         if (selectedDate) {
             setDate(selectedDate);
@@ -165,7 +165,9 @@ export default function Investimentos() {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.historicoItem}>
-                        <Text style={styles.historicoDescricao}>{item.data.toLocaleDateString()}</Text>
+                        <Text style={styles.historicoDescricao}>
+                            {new Date(item.data).toLocaleDateString()}
+                        </Text>
                         <Text style={styles.historicoDescricao}>{item.categoria}</Text>
                         <Text style={styles.historicoDescricao}>{item.descricao}</Text>
                         <Text style={[styles.historicoValor, { color: '#3498DB' }]}>
@@ -288,16 +290,16 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 20,
-      },
-      label: {
+    },
+    label: {
         color: '#FFFFFF',
         fontSize: 16,
         marginBottom: 10,
-      },
-      input: {
+    },
+    input: {
         borderBottomWidth: 1,
         borderBottomColor: '#333333',
         color: '#FFFFFF',
         paddingVertical: 10,
-      },
+    },
 });
