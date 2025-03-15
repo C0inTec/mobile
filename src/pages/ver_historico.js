@@ -1,13 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 import Icon from 'react-native-vector-icons/Feather';
 
 export default function HistoricoTransacoes() {
     const navigation = useNavigation();
+    const route = useRoute();
     const { historico } = useContext(TransacoesContext);
-    const [filtro, setFiltro] = useState('todos');
+    // Inicializa o filtro com o valor recebido (ou 'todos' caso não haja parâmetro)
+    const [filtro, setFiltro] = useState(route.params?.filtro || 'todos');
 
     const historicoFiltrado = historico.filter(item =>
         filtro === 'todos' || item.tipo === filtro
@@ -29,22 +31,30 @@ export default function HistoricoTransacoes() {
                 <TouchableOpacity
                     style={[styles.tipoButton, filtro === 'todos' && styles.filtroAtivo]}
                     onPress={() => setFiltro('todos')}>
-                    <Text style={[styles.filtroTexto, filtro === 'todos' && [styles.filtroTextoAtivo, { color: "#00000" }]]}>Todos</Text>
+                    <Text style={[styles.filtroTexto, filtro === 'todos' && [styles.filtroTextoAtivo, { color: "#00000" }]]}>
+                        Todos
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.tipoButton, filtro === 'receita' && styles.receitaSelecionada]}
                     onPress={() => setFiltro('receita')}>
-                    <Text style={[styles.filtroTexto, filtro === 'receita' && styles.filtroTextoAtivo]}>Receitas</Text>
+                    <Text style={[styles.filtroTexto, filtro === 'receita' && styles.filtroTextoAtivo]}>
+                        Receitas
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.tipoButton, filtro === 'despesa' && styles.despesaSelecionada]}
                     onPress={() => setFiltro('despesa')}>
-                    <Text style={[styles.filtroTexto, filtro === 'despesa' && styles.filtroTextoAtivo]}>Despesas</Text>
+                    <Text style={[styles.filtroTexto, filtro === 'despesa' && styles.filtroTextoAtivo]}>
+                        Despesas
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.tipoButton, filtro === 'investimento' && styles.investSelecionada]}
                     onPress={() => setFiltro('investimento')}>
-                    <Text style={[styles.filtroTexto, filtro === 'investimento' && styles.filtroTextoAtivo]}>Invest</Text>
+                    <Text style={[styles.filtroTexto, filtro === 'investimento' && styles.filtroTextoAtivo]}>
+                        Invest
+                    </Text>
                 </TouchableOpacity>
             </View>
 
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
     despesaSelecionada: {
         backgroundColor: '#FF0000',
     },
-    investSelecionada:{
+    investSelecionada: {
         backgroundColor: '#3498DB',
     }
 });

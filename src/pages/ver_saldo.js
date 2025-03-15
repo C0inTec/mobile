@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import { MaskedTextInput } from 'react-native-mask-text';
 import Icon from 'react-native-vector-icons/Feather';
@@ -16,7 +17,7 @@ import { TransacoesContext } from '../../contexts/TransacoesContext';
 
 function Saldo() {
   const route = useRoute();
-  const tipo = route.params ? route.params.tipo : 'receita'
+  const tipo = route.params ? route.params.tipo : 'receita';
   const { saldo, historico, adicionarTransacao } = useContext(TransacoesContext);
   const [valor, setValor] = useState('0');
   const [maskedValue, setMaskedValue] = useState('R$ 0,00');
@@ -26,7 +27,6 @@ function Saldo() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
   const [tipoTransacao, setTipoTransacao] = useState(tipo);
   const navigation = useNavigation();
-  
 
   const formatarMoeda = (valor) => {
     return Number(valor).toLocaleString('pt-BR', {
@@ -60,21 +60,20 @@ function Saldo() {
     { name: 'Lazer', color: '#E74C3C', tipo: 'despesa' },
     { name: 'Outros', color: '#F39C12', tipo: 'despesa' },
   ];
-  
 
   const handleConfirm = () => {
     if (isConfirmButtonEnabled()) {
       const valorNumerico = parseFloat(valor) / 100;
-  
       const novaTransacao = {
         id: Date.now().toString(),
         descricao: descricao.slice(0, 30),
         valor: `${tipoTransacao === 'receita' ? '+' : '-'} ${formatarMoeda(valorNumerico)}`,
         cor: tipoTransacao === 'receita' ? '#00FF00' : '#FF0000',
         tipo: tipoTransacao,
-        categoria: categoriaSelecionada || 'Outros',
+        categoria: categoriaSelecionada,
+        data: date,
       };
-  
+
       adicionarTransacao(novaTransacao, valorNumerico);
       setDescricao('');
       setValor('0');
@@ -84,11 +83,11 @@ function Saldo() {
   };
 
   const isConfirmButtonEnabled = () => {
-    return parseFloat(valor) > 0 && descricao.trim() !== '';
+    return parseFloat(valor) > 0 && descricao.trim() !== '' && categoriaSelecionada;
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {/* Header da tela */}
       <View style={styles.header}>
         <TouchableOpacity
@@ -174,25 +173,26 @@ function Saldo() {
         />
       )}
 
-    <View style={styles.categoriaContainer}>
-      <Text style={styles.label}>Categoria</Text>
-      <FlatList
-        data={categorias.filter(cat => cat.tipo === tipoTransacao)}
-        horizontal
-        keyExtractor={item => item.name}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[
-              styles.categoriaButton,
-              categoriaSelecionada === item.name && { backgroundColor: item.color }
-            ]}
-            onPress={() => setCategoriaSelecionada(item.name)}
-          >
-            <Text style={styles.categoriaText}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+      {/* Seção de categoria */}
+      <View style={styles.categoriaContainer}>
+        <Text style={styles.label}>Categoria</Text>
+        <FlatList
+          data={categorias.filter(cat => cat.tipo === tipoTransacao)}
+          horizontal
+          keyExtractor={item => item.name}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[
+                styles.categoriaButton,
+                categoriaSelecionada === item.name && { backgroundColor: item.color }
+              ]}
+              onPress={() => setCategoriaSelecionada(item.name)}
+            >
+              <Text style={styles.categoriaText}>{item.name}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
 
       {/* Campo de descrição */}
       <View style={styles.inputContainer}>
@@ -240,6 +240,8 @@ function Saldo() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.historicoItem}>
+            <Text style={styles.historicoDescricao}>{item.data.toLocaleDateString()}</Text>
+            <Text style={styles.historicoDescricao}>{item.categoria}</Text>
             <Text style={styles.historicoDescricao}>{item.descricao}</Text>
             <Text style={[styles.historicoValor, { color: item.cor }]}>
               {item.valor}
@@ -248,13 +250,13 @@ function Saldo() {
         )}
         style={styles.historicoList}
       />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#000000',
     padding: 20,
   },

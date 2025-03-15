@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import PieLocalChart from '../components/grafico_despesas';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
 
-
 export default function Relatorio() {
 
   const navigation = useNavigation();
@@ -21,51 +20,47 @@ export default function Relatorio() {
     };
 
     const categoriasCoresReceita = {
-      "Salário": "#28B463", // Verde
-      "Investimentos": "#1F618D", // Azul
-      "Outros": "#3498DB" // Azul (mesma cor para 'Outros' por padrão)
+      "Salário": "#28B463",
+      "Investimentos": "#1F618D",
+      "Outros": "#3498DB"
     };
 
     const coresQuentes = [
-      "#F39C12", // Amarelo
-      "#E74C3C", // Vermelho
-      "#D35400", // Laranja
-      "#C0392B", // Vermelho escuro
-      "#F1C40F", // Amarelo dourado
-      "#E67E22", // Laranja queimado
-      "#D96D0F"  // Laranja escuro
+      "#F39C12",
+      "#E74C3C",
+      "#D35400",
+      "#C0392B",
+      "#F1C40F",
+      "#E67E22",
+      "#D96D0F"
     ];
 
     const coresFrias = [
-      "#28B463", // Verde
-      "#1F618D", // Azul
-      "#5DADE2", // Azul claro
-      "#48C9B0", // Verde água
-      "#7D3C98", // Roxo azulado
-      "#2E86C1"  // Azul escuro
+      "#28B463",
+      "#1F618D",
+      "#5DADE2",
+      "#48C9B0",
+      "#7D3C98",
+      "#2E86C1"
     ];
 
-    const coresUsadasDespesa = new Set(Object.values(categoriasCoresDespesa)); // Para evitar repetições
-    const coresUsadasReceita = new Set(Object.values(categoriasCoresReceita)); // Para evitar repetições
+    const coresUsadasDespesa = new Set(Object.values(categoriasCoresDespesa));
+    const coresUsadasReceita = new Set(Object.values(categoriasCoresReceita));
 
-    // Função para gerar cor aleatória da paleta de cores quentes (despesas)
     const gerarCorAleatoriaDespesa = () => {
       let cor;
       do {
-        // Escolhe aleatoriamente uma cor da paleta de cores quentes
         cor = coresQuentes[Math.floor(Math.random() * coresQuentes.length)];
-      } while (coresUsadasDespesa.has(cor)); // Garante que a cor não foi usada antes
+      } while (coresUsadasDespesa.has(cor));
       coresUsadasDespesa.add(cor);
       return cor;
     };
 
-    // Função para gerar cor aleatória da paleta de cores frias (receitas)
     const gerarCorAleatoriaReceita = () => {
       let cor;
       do {
-        // Escolhe aleatoriamente uma cor da paleta de cores frias
         cor = coresFrias[Math.floor(Math.random() * coresFrias.length)];
-      } while (coresUsadasReceita.has(cor)); // Garante que a cor não foi usada antes
+      } while (coresUsadasReceita.has(cor));
       coresUsadasReceita.add(cor);
       return cor;
     };
@@ -76,17 +71,13 @@ export default function Relatorio() {
     const despesasPorCategoria = {};
     const receitasPorCategoria = {};
 
-    // Processa as despesas
     despesas.forEach(despesa => {
       const categoria = despesa.categoria || "Outros";
       if (!despesasPorCategoria[categoria]) {
         despesasPorCategoria[categoria] = 0;
       }
-
-      // Removendo caracteres não numéricos e convertendo para número
       const valorLimpo = despesa.valor.replace(/[^0-9,-]+/g, "").replace(",", ".");
       const valorNumerico = parseFloat(valorLimpo);
-
       if (!isNaN(valorNumerico)) {
         despesasPorCategoria[categoria] += valorNumerico;
       } else {
@@ -94,17 +85,13 @@ export default function Relatorio() {
       }
     });
 
-    // Processa as receitas
     receitas.forEach(receita => {
       const categoria = receita.categoria || "Outros";
       if (!receitasPorCategoria[categoria]) {
         receitasPorCategoria[categoria] = 0;
       }
-
-      // Removendo caracteres não numéricos e convertendo para número
       const valorLimpo = receita.valor.replace(/[^0-9,-]+/g, "").replace(",", ".");
       const valorNumerico = parseFloat(valorLimpo);
-
       if (!isNaN(valorNumerico)) {
         receitasPorCategoria[categoria] += valorNumerico;
       } else {
@@ -112,7 +99,6 @@ export default function Relatorio() {
       }
     });
 
-    // Criando os dados para o gráfico de despesas
     const despesasDataAtualizado = Object.keys(despesasPorCategoria).map(categoria => ({
       name: categoria,
       population: despesasPorCategoria[categoria],
@@ -121,7 +107,6 @@ export default function Relatorio() {
       legendFontSize: 10,
     }));
 
-    // Criando os dados para o gráfico de receitas
     const receitasDataAtualizado = Object.keys(receitasPorCategoria).map(categoria => ({
       name: categoria,
       population: receitasPorCategoria[categoria],
@@ -129,9 +114,6 @@ export default function Relatorio() {
       legendFontColor: "#FFFFFF",
       legendFontSize: 10,
     }));
-
-    // console.log("Dados do gráfico de despesas:", despesasDataAtualizado); // Verifique os dados no console
-    // console.log("Dados do gráfico de receitas:", receitasDataAtualizado); // Verifique os dados no console
 
     setChartDespesaData(despesasDataAtualizado);
     setChartReceitaData(receitasDataAtualizado);
@@ -141,7 +123,6 @@ export default function Relatorio() {
     <ScrollView style={{ flex: 1, backgroundColor: '#000000' }}>
       <View style={styles.contentBox}>
         <PieLocalChart titulo={'Despesas'} chartData={chartDespesaData} />
-
         <PieLocalChart titulo={'Receitas'} chartData={chartReceitaData} />
       </View>
     </ScrollView>

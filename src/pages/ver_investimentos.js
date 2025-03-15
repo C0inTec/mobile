@@ -71,7 +71,7 @@ export default function Investimentos() {
     };
 
     const isConfirmButtonEnabled = () => {
-        return parseFloat(valor) > 0 && date && categoriaSelecionada;
+        return parseFloat(valor) > 0 && descricao.trim() !== '' && categoriaSelecionada;
     };
 
     return (
@@ -165,6 +165,8 @@ export default function Investimentos() {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.historicoItem}>
+                        <Text style={styles.historicoDescricao}>{item.data.toLocaleDateString()}</Text>
+                        <Text style={styles.historicoDescricao}>{item.categoria}</Text>
                         <Text style={styles.historicoDescricao}>{item.descricao}</Text>
                         <Text style={[styles.historicoValor, { color: '#3498DB' }]}>
                             {item.valor}

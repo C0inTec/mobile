@@ -9,13 +9,16 @@ export default function PieLocalChart({ titulo, chartData }) {
   
   return (
     <View style={[styles.receitaChart, { marginTop: 20 }]}>
-      <TouchableOpacity onPress={() => navigation.navigate('Despesa')}>
+      <TouchableOpacity
+        // Redireciona para a tela desejada e passa o parâmetro para selecionar "despesa"
+        onPress={() => navigation.navigate('Historico', { filtro: 'despesa' })}
+      >
         {/* Título e botão */}
         <View style={styles.contaRow}>
           <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>
             Distribuição de {titulo}
           </Text>
-            <Icon name='chevron-right' size={24} color='#FFFFFF' style={{ marginLeft: 10 }} />
+          <Icon name='chevron-right' size={24} color='#FFFFFF' style={{ marginLeft: 10 }} />
         </View>
 
         {/* Gráfico ou mensagem */}
@@ -37,7 +40,7 @@ export default function PieLocalChart({ titulo, chartData }) {
               absolute
             />
           ) : (
-            <Text style={{ fontSize: 16, color: '#808080', fontWeight: 'bold', marginTop: 70}}>
+            <Text style={{ fontSize: 16, color: '#808080', fontWeight: 'bold', marginTop: 70 }}>
               Nenhum dado disponível para exibição.
             </Text>
           )}

@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import WalletCard from '../components/walletCard';
-import ReceitaCard from '../components/receitaCard';
+import WalletCard from '../components/card_saldo_e_invest';
+import ReceitaCard from '../components/cards_transacoes';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
-import PieLocalChart from '../components/grafico_despesas';
-import HealthCard from '../components/saudeCard';
+import HealthCard from '../components/card_saude';
 
 export default function Feed({eye}) {
   const { saldo, historico, totalReceitas, totalDespesas, totalInvestimentos } = useContext(TransacoesContext);
