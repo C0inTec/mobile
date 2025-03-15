@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import SecondaryHeader from '../components/secondaryHeader';
 import { sendMessageToGemini } from '../Google_IA/gemini';
 
 export default function DicasIA() {

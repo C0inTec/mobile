@@ -194,8 +194,6 @@ function Saldo() {
       />
     </View>
 
-      
-
       {/* Campo de descrição */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>

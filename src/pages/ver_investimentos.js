@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     FlatList,
+    ScrollView,
 } from 'react-native';
 import { MaskedTextInput } from 'react-native-mask-text';
 import Icon from 'react-native-vector-icons/Feather';
@@ -30,17 +31,16 @@ export default function Investimentos() {
         { name: 'Imoveis', color: '#3498DB' },
         { name: 'Renda Fixa', color: '#3498DB' },
         { name: 'Negócios', color: '#3498DB' },
-        { name: 'Outros', color: '#9B59B6' },
     ];
 
     const formatarMoeda = (valor) => {
         return Number(valor).toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
         });
-      };
+    };
 
     const handleConfirm = () => {
         if (isConfirmButtonEnabled()) {
@@ -51,7 +51,8 @@ export default function Investimentos() {
                 valor: `+ ${formatarMoeda(valorNumerico)}`,
                 cor: '#3498DB',
                 tipo: 'investimento',
-                categoria: categoriaSelecionada || 'Outros',
+                categoria: categoriaSelecionada,
+                data: date,
             };
 
             adicionarTransacao(novaTransacao, valorNumerico);
@@ -70,11 +71,11 @@ export default function Investimentos() {
     };
 
     const isConfirmButtonEnabled = () => {
-        return parseFloat(valor) > 0 && descricao.trim() !== '';
+        return parseFloat(valor) > 0 && date && categoriaSelecionada;
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
                     <Icon name='arrow-left' size={24} color='#FFFFFF' />
@@ -97,8 +98,6 @@ export default function Investimentos() {
                 />
             </View>
 
-
-            {/* Seção de seleção de data */}
             <View style={styles.dataSection}>
                 <TouchableOpacity
                     style={styles.dataButton}
@@ -108,7 +107,6 @@ export default function Investimentos() {
                 </TouchableOpacity>
             </View>
 
-            {/* DatePicker condicional */}
             {showDatePicker && (
                 <DateTimePicker
                     value={date}
@@ -137,8 +135,6 @@ export default function Investimentos() {
                 />
             </View>
 
-
-            {/* Campo de descrição */}
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
                 <TextInput
@@ -151,7 +147,6 @@ export default function Investimentos() {
                 />
             </View>
 
-            {/* Botão de confirmação */}
             <TouchableOpacity
                 style={[
                     styles.confirmButton,
@@ -164,7 +159,6 @@ export default function Investimentos() {
                 <Text style={styles.confirmButtonText}>Confirmar</Text>
             </TouchableOpacity>
 
-            {/* Histórico de Transações */}
             <Text style={styles.historicoTitle}>Histórico de Investimentos</Text>
             <FlatList
                 data={historico.filter(item => item.tipo === 'investimento')}
@@ -179,24 +173,74 @@ export default function Investimentos() {
                 )}
                 style={styles.historicoList}
             />
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#000000', padding: 20 },
-    header: { flexDirection: 'row', alignItems: 'center', marginBottom: 30 },
-    backButton: { padding: 10, marginRight: 10 },
-    title: { color: '#FFFFFF', fontSize: 20, marginLeft: 15 },
-    valorContainer: { marginBottom: 30 },
-    labelValor: { color: '#FFFFFF', fontSize: 16, marginBottom: 10 },
-    inputValor: { color: '#FFFFFF', fontSize: 30, paddingVertical: 8 },
-    categoriaContainer: { marginBottom: 20 },
-    categoriaButton: { paddingVertical: 10, paddingHorizontal: 15, borderRadius: 6, backgroundColor: '#333333', marginRight: 10 },
-    categoriaText: { color: '#FFFFFF', fontSize: 14, fontWeight: 'bold' },
-    confirmButton: { backgroundColor: '#FFD700', padding: 15, borderRadius: 8, alignItems: 'center', marginTop: 20 },
-    confirmButtonText: { color: '#000000', fontSize: 16, fontWeight: 'bold' },
-    confirmButtonDisabled: { backgroundColor: '#A9A9A9', opacity: 0.5 },
+    container: {
+        flexGrow: 1,
+        backgroundColor: '#000000',
+        padding: 20
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30
+    },
+    backButton: {
+        padding: 10,
+        marginRight: 10
+    },
+    title: {
+        color: '#FFFFFF',
+        fontSize: 20,
+        marginLeft: 15
+    },
+    valorContainer: {
+        marginBottom: 30
+    },
+    labelValor: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        marginBottom: 10
+    },
+    inputValor: {
+        color: '#FFFFFF',
+        fontSize: 30,
+        paddingVertical: 8
+    },
+    categoriaContainer: {
+        marginBottom: 20
+    },
+    categoriaButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 6,
+        backgroundColor: '#333333',
+        marginRight: 10
+    },
+    categoriaText: {
+        color: '#FFFFFF',
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+    confirmButton: {
+        backgroundColor: '#FFD700',
+        padding: 15,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 20
+    },
+    confirmButtonText: {
+        color: '#000000',
+        fontSize: 16,
+        ontWeight: 'bold'
+    },
+    confirmButtonDisabled: {
+        backgroundColor: '#A9A9A9',
+        opacity: 0.5
+    },
     dataSection: {
         flexDirection: 'row',
         marginBottom: 30,
@@ -216,17 +260,17 @@ const styles = StyleSheet.create({
     historicoTitle: {
         color: '#FFFFFF',
         fontSize: 18,
-        alignSelf: 'center',
+        alignSelf: 'left',
         fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 10,
     },
     historicoList: {
-        flex: 1,
+        flexGrow: 1,
     },
     historicoItem: {
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'left',
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#333333',
@@ -240,4 +284,18 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+    inputContainer: {
+        marginBottom: 20,
+      },
+      label: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        marginBottom: 10,
+      },
+      input: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#333333',
+        color: '#FFFFFF',
+        paddingVertical: 10,
+      },
 });

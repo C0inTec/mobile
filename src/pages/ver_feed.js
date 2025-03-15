@@ -105,14 +105,14 @@ export default function Feed({eye}) {
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <ReceitaCard
                     eye={eye}
-                    title={'Receita'}
+                    title={'Receitas'}
                     value={totalReceitas? totalReceitas.toFixed(2).replace('.', ',') : 0}
                     onPress={() => navigation.navigate('Saldo', {tipo: 'receita'})}
                     color={'#00FF00'}/>
 
                 <ReceitaCard
                     eye={eye}
-                    title={'Despesa'}
+                    title={'Despesas'}
                     value={totalDespesas? totalDespesas.toFixed(2).replace('.', ',') : 0}
                     onPress={() => navigation.navigate('Saldo', {tipo: 'despesa'})}
                     color={'#FF0000'}/>
