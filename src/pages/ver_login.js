@@ -25,7 +25,7 @@ export default function Login() {
   
     setLoading(true);
   
-    const url = 'https://9639-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/auth/login';
+    const url = 'https://fe59-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/auth/login';
     const data = {
       email: email,
       password: senha,
