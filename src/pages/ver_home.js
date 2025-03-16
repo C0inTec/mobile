@@ -48,7 +48,7 @@ export default function Home() {
     ];
 
     setChartData(despesasData);
-    setApiResponseUser({ first_name: 'João' });
+    setApiResponseUser({ first_name: 'Usuário' });
   }, []);
 
   const handleFabPress = () => {
