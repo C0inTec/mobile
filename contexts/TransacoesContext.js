@@ -67,8 +67,12 @@ export const TransacoesProvider = ({ children }) => {
       .filter(transacao => transacao.tipo === tipo)
       .reduce((total, transacao) => {
         const valorNumerico = parseFloat(
-          transacao.valor.replace(/[^\d,.-]/g, '').replace(',', '.')
+          transacao.valor
+            .replace(/[^\d,-]/g, '') // Remove caracteres não numéricos (exceto ',' e '-')
+            .replace(/\./g, '')       // Remove separadores de milhar
+            .replace(',', '.')        // Converte vírgula decimal em ponto
         );
+        
         return total + (valorNumerico || 0);
       }, 0);
   
