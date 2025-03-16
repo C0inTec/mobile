@@ -346,7 +346,8 @@ const styles = StyleSheet.create({
     inputValor: {
         color: '#FFFFFF',
         fontSize: 30,
-        paddingVertical: 8
+        flex: 1,
+        paddingVertical: 8,
     },
     categoriaContainer: {
         marginBottom: 20
