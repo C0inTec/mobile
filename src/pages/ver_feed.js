@@ -16,25 +16,29 @@ export default function Feed({eye}) {
     const prepararDadosParaAPI = () => {
       const categorias = {
         "ganhos": {
-          "salario": 0,
-          "bonus": 0,
-          "outros": 0,
-          "freelas": 0,
-          "dividendos": 0
+          "salario": 500.00,
+          "bonus": 300.00,
+          "outros": 150.00,
+          "rendimentosPassivos": 200.00,
+          "freelas": 800.00,
+          "dividendos": 100.00
         },
         "despesas": {
-          "agua": 0,
-          "celular": 0,
-          "luz": 0,
-          "internet": 0,
-          "aluguel": 0,
-          "cartao": 0,
-          "lazer": 0,
-          "apostas": 0
+          "aluguel": 1200.00,
+          "contas": 400.00,
+          "alimentacao": 600.00,
+          "transporte": 300.00,
+          "educacao": 200.00,
+          "saude": 150.00,
+          "lazer": 250.00
         },
         "investimentos": {
-          "poupanca": 0,
-          "renda_variavel": 0
+          "acoes": 1000.00,
+          "fundos": 500.00,
+          "criptomoedas": 300.00,
+          "imoveis": 2000.00,
+          "rendafixa": 700.00,
+          "negocios": 600.00
         }
       }
       
