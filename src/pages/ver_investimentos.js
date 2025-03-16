@@ -120,7 +120,7 @@ export default function Investimentos() {
             console.log("Payload a ser enviado:", JSON.stringify(payload));
 
             // Envia a requisição incluindo o token no header Authorization
-            const response = await fetch('https://fc4e-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/wallet', {
+            const response = await fetch('https://9639-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/wallet', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
