@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { TransacoesContext } from '../../contexts/TransacoesContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Investimentos() {
     const { saldo, historico, adicionarTransacao } = useContext(TransacoesContext);
@@ -42,7 +43,108 @@ export default function Investimentos() {
         });
     };
 
-    const handleConfirm = () => {
+    // Função para atualizar o wallet via API
+    const updateWalletInvestment = async (amount) => {
+        try {
+            // Busca o userId e o token armazenados
+            const storedUserId = await AsyncStorage.getItem('userId');
+            const token = await AsyncStorage.getItem('token');
+            if (!storedUserId) {
+                console.error('User id não encontrado.');
+                return;
+            }
+            if (!token) {
+                console.error('Token não encontrado.');
+                return;
+            }
+            console.log("Stored userId:", storedUserId);
+            console.log("Token:", token);
+
+            const numericUserId = Number(storedUserId);
+
+            // Cria o payload com valores iniciais zerados
+            const payload = {
+                userId: numericUserId,
+                despesas: {
+                    aluguel: 0,
+                    contas: 0,
+                    alimentacao: 0,
+                    transporte: 0,
+                    educacao: 0,
+                    saude: 0,
+                    lazer: 0,
+                },
+                investimento: {
+                    acoes: 0,
+                    imoveis: 0,
+                    criptomoedas: 0,
+                    rendafixa: 0,
+                    negocios: 0,
+                    fundos: 0,
+                },
+                ganhos: {
+                    salario: 0,
+                    bonus: 0,
+                    outros: 0,
+                    rendimentosPassivos: 0,
+                    freelas: 0,
+                    dividendos: 0,
+                },
+            };
+
+            // Mapeia a categoria selecionada para o campo correto
+            switch (categoriaSelecionada) {
+                case 'Ações':
+                    payload.investimento.acoes = amount;
+                    break;
+                case 'Fundos':
+                    payload.investimento.fundos = amount;
+                    break;
+                case 'Criptomoedas':
+                    payload.investimento.criptomoedas = amount;
+                    break;
+                case 'Imoveis':
+                    payload.investimento.imoveis = amount;
+                    break;
+                case 'Renda Fixa':
+                    payload.investimento.rendafixa = amount;
+                    break;
+                case 'Negócios':
+                    payload.investimento.negocios = amount;
+                    break;
+                default:
+                    break;
+            }
+
+            // Log do payload para verificação
+            console.log("Payload a ser enviado:", JSON.stringify(payload));
+
+            // Envia a requisição incluindo o token no header Authorization
+            const response = await fetch('https://fc4e-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/wallet', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Token incluído aqui
+                },
+                body: JSON.stringify(payload),
+            });
+
+            console.log("Status da resposta:", response.status);
+            const responseText = await response.text();
+            console.log("Resposta da API:", responseText);
+
+            if (!response.ok) {
+                console.error('Falha ao atualizar wallet');
+            } else {
+                console.log('Wallet atualizado com sucesso');
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar wallet', error);
+        }
+    };
+
+
+    const handleConfirm = async () => {
         if (isConfirmButtonEnabled()) {
             const valorNumerico = parseFloat(valor) / 100;
             const novaTransacao = {
@@ -55,7 +157,12 @@ export default function Investimentos() {
                 data: date,
             };
 
+            // Adiciona a transação no contexto
             adicionarTransacao(novaTransacao, valorNumerico);
+
+            // Atualiza o wallet com o valor investido
+            await updateWalletInvestment(valorNumerico);
+
             setDescricao('');
             setValor('0');
             setMaskedValue('R$ 0,00');
@@ -126,7 +233,10 @@ export default function Investimentos() {
                     keyExtractor={item => item.name}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            style={[styles.categoriaButton, categoriaSelecionada === item.name && { backgroundColor: item.color }]}
+                            style={[
+                                styles.categoriaButton,
+                                categoriaSelecionada === item.name && { backgroundColor: item.color },
+                            ]}
                             onPress={() => setCategoriaSelecionada(item.name)}
                         >
                             <Text style={styles.categoriaText}>{item.name}</Text>
@@ -239,7 +349,7 @@ const styles = StyleSheet.create({
     confirmButtonText: {
         color: '#000000',
         fontSize: 16,
-        ontWeight: 'bold'
+        fontWeight: 'bold'
     },
     confirmButtonDisabled: {
         backgroundColor: '#A9A9A9',
@@ -260,11 +370,10 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontWeight: 'bold',
     },
-
     historicoTitle: {
         color: '#FFFFFF',
         fontSize: 18,
-        alignSelf: 'left',
+        alignSelf: 'flex-start',
         fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 10,
@@ -274,7 +383,7 @@ const styles = StyleSheet.create({
     },
     historicoItem: {
         flexDirection: 'column',
-        justifyContent: 'left',
+        justifyContent: 'flex-start',
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#333333',

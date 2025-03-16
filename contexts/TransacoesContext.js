@@ -10,7 +10,7 @@ export const TransacoesProvider = ({ children }) => {
   const [totalDespesas, setTotalDespesas] = useState(0);
   const [totalInvestimentos, setTotalInvestimentos] = useState(0);
 
-  console.log(historico)
+  // console.log(historico)
 
   // APAGAR REGISTROS
   // useEffect(() => {

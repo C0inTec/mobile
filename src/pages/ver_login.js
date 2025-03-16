@@ -9,6 +9,7 @@ import {
   Image 
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -21,15 +22,15 @@ export default function Login() {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
-
+  
     setLoading(true);
-
-    const url = 'https://fc4e-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/auth/login'; // Endpoint da API de login
+  
+    const url = 'https://fc4e-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/auth/login';
     const data = {
       email: email,
       password: senha,
     };
-
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -38,25 +39,23 @@ export default function Login() {
         },
         body: JSON.stringify(data),
       });
-
-      const responseText = await response.text(); // Obtém o texto completo da resposta
-      console.log('Resposta completa:', responseText);
-
-      if (true) {
-        // const result = JSON.parse(responseText); // Faz o parsing manual da resposta
-        // Alert.alert('Sucesso', 'Login realizado com sucesso!');
-        navigation.navigate('Home'); // Navega para a tela principal
-      } else {
-        console.error('Erro na API:', responseText);
-        Alert.alert('Erro', responseText || 'Ocorreu um erro ao realizar o login.');
-      }
+  
+      const result = await response.json();
+      console.log('Resposta completa:', result);
+  
+      // Salva o token e o id no AsyncStorage
+      await AsyncStorage.setItem('userId', result.id.toString());
+      await AsyncStorage.setItem('token', result.token);
+  
+      Alert.alert('Sucesso', 'Login realizado com sucesso!');
+      navigation.navigate('Home');
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Não foi possível realizar o login. Tente novamente mais tarde.');
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   return (
     <View style={styles.container}>
