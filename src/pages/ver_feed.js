@@ -59,7 +59,13 @@ export default function Feed({eye}) {
         'Transporte': ['despesas', 'transporte'],
         'Educação': ['despesas', 'educacao'],
         'Saúde': ['despesas', 'saude'],
-        'Lazer': ['despesas', 'lazer']
+        'Lazer': ['despesas', 'lazer'],
+        'Ações': ['investimentos', 'acoes'],
+        'Fundos Imobiliários': ['investimentos', 'fundos'],
+        'Criptomoedas': ['investimentos', 'criptomoedas'],
+        'Imóveis': ['investimentos', 'imoveis'],
+        'Renda Fixa': ['investimentos', 'rendafixa'],
+        'Negócios': ['investimentos', 'negocios']
       };
   
       if (mapCategorias[categoria]) {
