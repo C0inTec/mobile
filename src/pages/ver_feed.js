@@ -13,47 +13,63 @@ export default function Feed({eye}) {
   const navigation = useNavigation();
   
    // Função para formatar os dados para a API
-    const prepararDadosParaAPI = () => {
-      const categorias = {
-        "ganhos": {
-          "salario": 500.00,
-          "bonus": 300.00,
-          "outros": 150.00,
-          "rendimentosPassivos": 200.00,
-          "freelas": 800.00,
-          "dividendos": 100.00
-        },
-        "despesas": {
-          "aluguel": 1200.00,
-          "contas": 400.00,
-          "alimentacao": 600.00,
-          "transporte": 300.00,
-          "educacao": 200.00,
-          "saude": 150.00,
-          "lazer": 250.00
-        },
-        "investimentos": {
-          "acoes": 1000.00,
-          "fundos": 500.00,
-          "criptomoedas": 300.00,
-          "imoveis": 2000.00,
-          "rendafixa": 700.00,
-          "negocios": 600.00
-        }
+   const prepararDadosParaAPI = () => {
+    // Iniciar todos valores zerados
+    const categorias = {
+      "ganhos": {
+        "salario": 0,
+        "bonus": 0,
+        "outros": 0,
+        "rendimentosPassivos": 0,
+        "freelas": 0,
+        "dividendos": 0
+      },
+      "despesas": {
+        "aluguel": 0,
+        "contas": 0,
+        "alimentacao": 0,
+        "transporte": 0,
+        "educacao": 0,
+        "saude": 0,
+        "lazer": 0
+      },
+      "investimentos": {
+        "acoes": 0,
+        "fundos": 0,
+        "criptomoedas": 0,
+        "imoveis": 0,
+        "rendafixa": 0,
+        "negocios": 0
       }
+    }
+  
+    // Mapeamento correto das categorias
+    historico.forEach(({ categoria, valor, tipo }) => {
+      const valorNumerico = parseFloat(valor.replace(/[+\-R$\s]/g, '').replace(',', '.').replace(' ', ''));
       
+      const mapCategorias = {
+        'Salário': ['ganhos', 'salario'],
+        'Bonus': ['ganhos', 'bonus'],
+        'Rendimentos Passivos': ['ganhos', 'rendimentosPassivos'],
+        'Freelancer': ['ganhos', 'freelas'],
+        'Dividendos': ['ganhos', 'dividendos'],
+        'Aluguel': ['despesas', 'aluguel'],
+        'Contas': ['despesas', 'contas'],
+        'Alimentação': ['despesas', 'alimentacao'],
+        'Transporte': ['despesas', 'transporte'],
+        'Educação': ['despesas', 'educacao'],
+        'Saúde': ['despesas', 'saude'],
+        'Lazer': ['despesas', 'lazer']
+      };
   
-      historico.forEach(({ categoria, valor }) => {
-        const valorNumerico = parseFloat(valor.replace(/[+\-R$\s]/g, '').replace(',', '.'));
-        if (categorias.hasOwnProperty(categoria)) {
-          categorias[categoria] += valorNumerico;
-        }
-      });
-
-      console.log(categorias)
+      if (mapCategorias[categoria]) {
+        const [grupo, campo] = mapCategorias[categoria];
+        categorias[grupo][campo] += Math.abs(valorNumerico);
+      }
+    });
   
-      return categorias;
-    };
+    return categorias;
+  };  
   
     // Consulta a API Flask
     const consultarAPI = async () => {

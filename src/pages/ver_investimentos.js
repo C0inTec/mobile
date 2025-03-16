@@ -146,7 +146,10 @@ export default function Investimentos() {
 
     const handleConfirm = async () => {
         if (isConfirmButtonEnabled()) {
-            const valorNumerico = parseFloat(valor) / 100;
+            // Adicionar tratamento igual ao da tela de Saldo
+            const valorLimpo = valor.replace(/[^0-9]/g, '');
+            const valorNumerico = parseFloat(valorLimpo) / 100;
+
             const novaTransacao = {
                 id: Date.now().toString(),
                 descricao: descricao.slice(0, 30),
@@ -157,10 +160,7 @@ export default function Investimentos() {
                 data: date,
             };
 
-            // Adiciona a transação no contexto
             adicionarTransacao(novaTransacao, valorNumerico);
-
-            // Atualiza o wallet com o valor investido
             await updateWalletInvestment(valorNumerico);
 
             setDescricao('');
@@ -169,6 +169,7 @@ export default function Investimentos() {
             setCategoriaSelecionada(null);
         }
     };
+
 
     const handleDateChange = (event, selectedDate) => {
         setShowDatePicker(false);
@@ -191,18 +192,31 @@ export default function Investimentos() {
             </View>
 
             <View style={styles.valorContainer}>
-                <Text style={styles.labelValor}>Valor do Investimento</Text>
-                <MaskedTextInput
-                    type='currency'
-                    options={{ prefix: 'R$ ', decimalSeparator: ',', groupSeparator: '.', precision: 2 }}
-                    style={styles.inputValor}
-                    keyboardType='number-pad'
-                    value={valor}
-                    onChangeText={(formatted, rawText) => {
-                        setValor(rawText || '0');
-                        setMaskedValue(formatted);
-                    }}
-                />
+                <Text style={styles.labelValor}>Valor da transação</Text>
+                <View style={styles.inputRow}>
+                    <MaskedTextInput
+                        type="currency"
+                        options={{
+                            prefix: 'R$ ',
+                            decimalSeparator: ',',
+                            groupSeparator: '.',
+                            precision: 2,
+                        }}
+                        style={styles.inputValor}
+                        keyboardType="number-pad"
+                        value={valor}
+                        selection={{
+                            start: (maskedValue || '').length,
+                            end: (maskedValue || '').length,
+                        }}
+                        onChangeText={(formatted, rawText) => {
+                            setValor(rawText || '0');
+                            setMaskedValue(formatted);
+                        }}
+                        placeholder="00,00"
+                        placeholderTextColor="#FFFFFF"
+                    />
+                </View>
             </View>
 
             <View style={styles.dataSection}>
@@ -410,5 +424,9 @@ const styles = StyleSheet.create({
         borderBottomColor: '#333333',
         color: '#FFFFFF',
         paddingVertical: 10,
+    },
+    inputRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 });
