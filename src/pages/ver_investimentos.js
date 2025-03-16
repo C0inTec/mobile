@@ -183,125 +183,135 @@ export default function Investimentos() {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
-                    <Icon name='arrow-left' size={24} color='#FFFFFF' />
-                </TouchableOpacity>
-                <Text style={styles.title}>Novo Investimento</Text>
-            </View>
-
-            <View style={styles.valorContainer}>
-                <Text style={styles.labelValor}>Valor da transação</Text>
-                <View style={styles.inputRow}>
-                    <MaskedTextInput
-                        type="currency"
-                        options={{
-                            prefix: 'R$ ',
-                            decimalSeparator: ',',
-                            groupSeparator: '.',
-                            precision: 2,
-                        }}
-                        style={styles.inputValor}
-                        keyboardType="number-pad"
-                        value={valor}
-                        selection={{
-                            start: (maskedValue || '').length,
-                            end: (maskedValue || '').length,
-                        }}
-                        onChangeText={(formatted, rawText) => {
-                            setValor(rawText || '0');
-                            setMaskedValue(formatted);
-                        }}
-                        placeholder="00,00"
-                        placeholderTextColor="#FFFFFF"
-                    />
-                </View>
-            </View>
-
-            <View style={styles.dataSection}>
-                <TouchableOpacity
-                    style={styles.dataButton}
-                    onPress={() => setShowDatePicker(true)}
-                >
-                    <Text style={styles.dataButtonText}>{date.toLocaleDateString()}</Text>
-                </TouchableOpacity>
-            </View>
-
-            {showDatePicker && (
-                <DateTimePicker
-                    value={date}
-                    mode='date'
-                    display='default'
-                    onChange={handleDateChange}
-                    textColor='#FFFFFF'
-                    themeVariant='light'
-                />
-            )}
-
-            <View style={styles.categoriaContainer}>
-                <Text style={styles.label}>Categoria</Text>
-                <FlatList
-                    data={categorias}
-                    horizontal
-                    keyExtractor={item => item.name}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={[
-                                styles.categoriaButton,
-                                categoriaSelecionada === item.name && { backgroundColor: item.color },
-                            ]}
-                            onPress={() => setCategoriaSelecionada(item.name)}
-                        >
-                            <Text style={styles.categoriaText}>{item.name}</Text>
+        <FlatList
+            contentContainerStyle={styles.container}
+            ListHeaderComponent={
+                <View>
+                    {/* Header */}
+                    <View style={styles.header}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
+                            <Icon name='arrow-left' size={24} color='#FFFFFF' />
                         </TouchableOpacity>
-                    )}
-                />
-            </View>
-
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Digite uma descrição'
-                    placeholderTextColor='#666666'
-                    value={descricao}
-                    onChangeText={setDescricao}
-                    maxLength={30}
-                />
-            </View>
-
-            <TouchableOpacity
-                style={[
-                    styles.confirmButton,
-                    !isConfirmButtonEnabled() && styles.confirmButtonDisabled,
-                ]}
-                onPress={handleConfirm}
-                activeOpacity={0.8}
-                disabled={!isConfirmButtonEnabled()}
-            >
-                <Text style={styles.confirmButtonText}>Confirmar</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.historicoTitle}>Histórico de Investimentos</Text>
-            <FlatList
-                data={historico.filter(item => item.tipo === 'investimento')}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <View style={styles.historicoItem}>
-                        <Text style={styles.historicoDescricao}>
-                            {new Date(item.data).toLocaleDateString()}
-                        </Text>
-                        <Text style={styles.historicoDescricao}>{item.categoria}</Text>
-                        <Text style={styles.historicoDescricao}>{item.descricao}</Text>
-                        <Text style={[styles.historicoValor, { color: '#3498DB' }]}>
-                            {item.valor}
-                        </Text>
+                        <Text style={styles.title}>Novo Investimento</Text>
                     </View>
-                )}
-                style={styles.historicoList}
-            />
-        </ScrollView>
+
+                    {/* Seção de valor */}
+                    <View style={styles.valorContainer}>
+                        <Text style={styles.labelValor}>Valor da transação</Text>
+                        <View style={styles.inputRow}>
+                            <MaskedTextInput
+                                type="currency"
+                                options={{
+                                    prefix: 'R$ ',
+                                    decimalSeparator: ',',
+                                    groupSeparator: '.',
+                                    precision: 2,
+                                }}
+                                style={styles.inputValor}
+                                keyboardType="number-pad"
+                                value={valor}
+                                selection={{
+                                    start: (maskedValue || '').length,
+                                    end: (maskedValue || '').length,
+                                }}
+                                onChangeText={(formatted, rawText) => {
+                                    setValor(rawText || '0');
+                                    setMaskedValue(formatted);
+                                }}
+                                placeholder="00,00"
+                                placeholderTextColor="#FFFFFF"
+                            />
+                        </View>
+                    </View>
+
+                    {/* Seletor de data */}
+                    <View style={styles.dataSection}>
+                        <TouchableOpacity
+                            style={styles.dataButton}
+                            onPress={() => setShowDatePicker(true)}
+                        >
+                            <Text style={styles.dataButtonText}>{date.toLocaleDateString()}</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {showDatePicker && (
+                        <DateTimePicker
+                            value={date}
+                            mode='date'
+                            display='default'
+                            onChange={handleDateChange}
+                            textColor='#FFFFFF'
+                            themeVariant='light'
+                        />
+                    )}
+
+                    {/* Lista horizontal de categorias */}
+                    <View style={styles.categoriaContainer}>
+                        <Text style={styles.label}>Categoria</Text>
+                        <FlatList
+                            horizontal
+                            data={categorias}
+                            keyExtractor={item => item.name}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.categoriaButton,
+                                        categoriaSelecionada === item.name && { backgroundColor: item.color },
+                                    ]}
+                                    onPress={() => setCategoriaSelecionada(item.name)}
+                                >
+                                    <Text style={styles.categoriaText}>{item.name}</Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+
+                    {/* Campo de descrição */}
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Digite uma descrição'
+                            placeholderTextColor='#666666'
+                            value={descricao}
+                            onChangeText={setDescricao}
+                            maxLength={30}
+                        />
+                    </View>
+
+                    {/* Botão de confirmação */}
+                    <TouchableOpacity
+                        style={[
+                            styles.confirmButton,
+                            !isConfirmButtonEnabled() && styles.confirmButtonDisabled,
+                        ]}
+                        onPress={handleConfirm}
+                        activeOpacity={0.8}
+                        disabled={!isConfirmButtonEnabled()}
+                    >
+                        <Text style={styles.confirmButtonText}>Confirmar</Text>
+                    </TouchableOpacity>
+
+                    {/* Título do histórico */}
+                    <Text style={styles.historicoTitle}>Histórico de Investimentos</Text>
+                </View>
+            }
+            data={historico.filter(item => item.tipo === 'investimento')}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+                <View style={styles.historicoItem}>
+                    <Text style={styles.historicoDescricao}>
+                        {new Date(item.data).toLocaleDateString()}
+                    </Text>
+                    <Text style={styles.historicoDescricao}>{item.categoria}</Text>
+                    <Text style={styles.historicoDescricao}>{item.descricao}</Text>
+                    <Text style={[styles.historicoValor, { color: '#3498DB' }]}>
+                        {item.valor}
+                    </Text>
+                </View>
+            )}
+            nestedScrollEnabled={true}
+        />
     );
 }
 

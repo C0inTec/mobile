@@ -190,154 +190,159 @@ function Saldo() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
-          <Icon name="arrow-left" size={24} color="#FFFFFF" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Nova transação</Text>
-      </View>
+    <FlatList
+      contentContainerStyle={styles.container}
+      ListHeaderComponent={
+        <>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.backButton}>
+              <Icon name="arrow-left" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+            <Text style={styles.title}>Nova transação</Text>
+          </View>
 
-      <View style={styles.tipoContainer}>
-        <TouchableOpacity
-          style={[
-            styles.tipoButton,
-            tipoTransacao === 'receita' && styles.receitaSelecionada,
-          ]}
-          onPress={() => setTipoTransacao('receita')}
-        >
-          <Text style={styles.tipoButtonText}>Receita</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.tipoButton,
-            tipoTransacao === 'despesa' && styles.despesaSelecionada,
-          ]}
-          onPress={() => setTipoTransacao('despesa')}
-        >
-          <Text style={styles.tipoButtonText}>Despesa</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.valorContainer}>
-        <Text style={styles.labelValor}>Valor da transação</Text>
-        <View style={styles.inputRow}>
-          <MaskedTextInput
-            type="currency"
-            options={{
-              prefix: 'R$ ',
-              decimalSeparator: ',',
-              groupSeparator: '.',
-              precision: 2,
-            }}
-            style={styles.inputValor}
-            keyboardType="number-pad"
-            value={valor}
-            selection={{
-              start: (maskedValue || '').length,
-              end: (maskedValue || '').length,
-            }}
-            onChangeText={(formatted, rawText) => {
-              setValor(rawText || '0');
-              setMaskedValue(formatted);
-            }}
-            placeholder="00,00"
-            placeholderTextColor="#FFFFFF"
-          />
-        </View>
-      </View>
-
-      <View style={styles.dataSection}>
-        <TouchableOpacity style={styles.dataButton} onPress={() => setShowDatePicker(true)}>
-          <Text style={styles.dataButtonText}>{date.toLocaleDateString()}</Text>
-        </TouchableOpacity>
-      </View>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-          textColor="#FFFFFF"
-          themeVariant="light"
-        />
-      )}
-
-      <View style={styles.categoriaContainer}>
-        <Text style={styles.label}>Categoria</Text>
-        <FlatList
-          data={categorias.filter((cat) => cat.tipo === tipoTransacao)}
-          horizontal
-          keyExtractor={(item) => item.name}
-          renderItem={({ item }) => (
+          <View style={styles.tipoContainer}>
             <TouchableOpacity
               style={[
-                styles.categoriaButton,
-                categoriaSelecionada === item.name && { backgroundColor: item.color },
+                styles.tipoButton,
+                tipoTransacao === 'receita' && styles.receitaSelecionada,
               ]}
-              onPress={() => setCategoriaSelecionada(item.name)}
+              onPress={() => setTipoTransacao('receita')}
             >
-              <Text style={styles.categoriaText}>{item.name}</Text>
+              <Text style={styles.tipoButtonText}>Receita</Text>
             </TouchableOpacity>
-          )}
-        />
-      </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Digite uma descrição"
-          placeholderTextColor="#666666"
-          value={descricao}
-          onChangeText={setDescricao}
-          maxLength={30}
-        />
-      </View>
-
-      <View style={styles.saldoContainer}>
-        <Text style={styles.saldoLabel}>Saldo em Contas:</Text>
-        <Text
-          style={[
-            styles.saldoValor,
-            { color: saldo > 0 ? '#00FF00' : saldo < 0 ? '#FF0000' : '#FFFFFF' },
-          ]}
-        >
-          {formatarMoeda(saldo)}
-        </Text>
-      </View>
-
-      <TouchableOpacity
-        style={[
-          styles.confirmButton,
-          !isConfirmButtonEnabled() && styles.confirmButtonDisabled,
-        ]}
-        onPress={handleConfirm}
-        activeOpacity={0.8}
-        disabled={!isConfirmButtonEnabled()}
-      >
-        <Text style={styles.confirmButtonText}>Confirmar</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.historicoTitle}>Histórico de Transações</Text>
-      <FlatList
-        data={historico}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.historicoItem}>
-            <Text style={styles.historicoDescricao}>
-              {new Date(item.data).toLocaleDateString()}
-            </Text>
-            <Text style={styles.historicoDescricao}>{item.categoria}</Text>
-            <Text style={styles.historicoDescricao}>{item.descricao}</Text>
-            <Text style={[styles.historicoValor, { color: item.cor }]}>{item.valor}</Text>
+            <TouchableOpacity
+              style={[
+                styles.tipoButton,
+                tipoTransacao === 'despesa' && styles.despesaSelecionada,
+              ]}
+              onPress={() => setTipoTransacao('despesa')}
+            >
+              <Text style={styles.tipoButtonText}>Despesa</Text>
+            </TouchableOpacity>
           </View>
-        )}
-        style={styles.historicoList}
-      />
-    </ScrollView>
+
+          <View style={styles.valorContainer}>
+            <Text style={styles.labelValor}>Valor da transação</Text>
+            <View style={styles.inputRow}>
+              <MaskedTextInput
+                type="currency"
+                options={{
+                  prefix: 'R$ ',
+                  decimalSeparator: ',',
+                  groupSeparator: '.',
+                  precision: 2,
+                }}
+                style={styles.inputValor}
+                keyboardType="number-pad"
+                value={valor}
+                selection={{
+                  start: (maskedValue || '').length,
+                  end: (maskedValue || '').length,
+                }}
+                onChangeText={(formatted, rawText) => {
+                  setValor(rawText || '0');
+                  setMaskedValue(formatted);
+                }}
+                placeholder="00,00"
+                placeholderTextColor="#FFFFFF"
+              />
+            </View>
+          </View>
+
+          <View style={styles.dataSection}>
+            <TouchableOpacity style={styles.dataButton} onPress={() => setShowDatePicker(true)}>
+              <Text style={styles.dataButtonText}>{date.toLocaleDateString()}</Text>
+            </TouchableOpacity>
+          </View>
+
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="default"
+              onChange={handleDateChange}
+              textColor="#FFFFFF"
+              themeVariant="light"
+            />
+          )}
+
+          <View style={styles.categoriaContainer}>
+            <Text style={styles.label}>Categoria</Text>
+            <FlatList
+              data={categorias.filter((cat) => cat.tipo === tipoTransacao)}
+              horizontal
+              keyExtractor={(item) => item.name}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={[
+                    styles.categoriaButton,
+                    categoriaSelecionada === item.name && { backgroundColor: item.color },
+                  ]}
+                  onPress={() => setCategoriaSelecionada(item.name)}
+                >
+                  <Text style={styles.categoriaText}>{item.name}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Descrição (máx. 30 caracteres)</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite uma descrição"
+              placeholderTextColor="#666666"
+              value={descricao}
+              onChangeText={setDescricao}
+              maxLength={30}
+            />
+          </View>
+
+          <View style={styles.saldoContainer}>
+            <Text style={styles.saldoLabel}>Saldo em Contas:</Text>
+            <Text
+              style={[
+                styles.saldoValor,
+                { color: saldo > 0 ? '#00FF00' : saldo < 0 ? '#FF0000' : '#FFFFFF' },
+              ]}
+            >
+              {formatarMoeda(saldo)}
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            style={[
+              styles.confirmButton,
+              !isConfirmButtonEnabled() && styles.confirmButtonDisabled,
+            ]}
+            onPress={handleConfirm}
+            activeOpacity={0.8}
+            disabled={!isConfirmButtonEnabled()}
+          >
+            <Text style={styles.confirmButtonText}>Confirmar</Text>
+          </TouchableOpacity>
+        </>
+      }
+      data={historico}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View style={styles.historicoItem}>
+          <Text style={styles.historicoDescricao}>
+            {new Date(item.data).toLocaleDateString()}
+          </Text>
+          <Text style={styles.historicoDescricao}>{item.categoria}</Text>
+          <Text style={styles.historicoDescricao}>{item.descricao}</Text>
+          <Text style={[styles.historicoValor, { color: item.cor }]}>{item.valor}</Text>
+        </View>
+      )}
+      ListFooterComponent={
+        <View style={{ marginBottom: 50 }} />
+      }
+      showsVerticalScrollIndicator={false}
+      nestedScrollEnabled={true}
+    />
   );
 }
 
