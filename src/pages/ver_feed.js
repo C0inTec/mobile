@@ -152,7 +152,11 @@ export default function Feed({eye}) {
             color={saldo >= 0 ? '#FFFFFF' : '#FF0000'}
           />
 
-          <HealthCard perfil={relatorio.descricao? relatorio.descricao : ''} eye={eye} onPress={() => navigation.navigate("DicasIA", {historico})}/>
+          <HealthCard
+            perfil={historico.length === 0 ? 'Nenhuma transação encontrada' : relatorio?.descricao || ''}
+            eye={eye}
+            onPress={() => navigation.navigate("DicasIA", { historico })}
+          />
 
         </View>
       </ScrollView>
