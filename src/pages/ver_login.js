@@ -5,9 +5,11 @@ import {
   StyleSheet, 
   TextInput, 
   TouchableOpacity,
-  Alert, Image
+  Alert, 
+  Image 
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -15,41 +17,65 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const handleSave = () => {
+  const handleLogin = async () => {
+    if (!email.trim() || !senha.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+      return;
+    }
+  
     setLoading(true);
-    setTimeout(() => {
-      verificaLogin();
-      setLoading(false);
-    }, 2000);
-  };
-
-  const verificaLogin = () => {
-      if (!email.trim() || !senha.trim()) {
-        Alert.alert('Erro', 'Por favor, preencha todos os campos.');
-      } else {
-        navigation.navigate('Home');
-      }
+  
+    const url = 'https://fe59-2804-954-39e-e500-c4e4-fe22-a64f-8b8c.ngrok-free.app/auth/login';
+    const data = {
+      email: email,
+      password: senha,
     };
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+      console.log('Resposta completa:', result);
+  
+      // Salva o token e o id no AsyncStorage
+      await AsyncStorage.setItem('userId', result.id.toString());
+      await AsyncStorage.setItem('token', result.token);
+  
+      Alert.alert('Sucesso', 'Login realizado com sucesso!');
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível realizar o login. Tente novamente mais tarde.');
+    } finally {
+      setLoading(false);
+    }
+  };  
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/Logo3.png")} style={{width: 200, height: 150, marginTop: 50}}/>
+      <Image source={require('../../assets/Logo3.png')} style={{width: 200, height: 150, marginTop: 50}}/>
       <Text style={styles.title}>Bem vindo de volta!</Text>
-      <Text style={styles.text}>Preencha o campo abaixo</Text>
+      <Text style={styles.text}>Preencha os campos abaixo</Text>
       
       <TextInput
         style={styles.input}
-        placeholder="E-mail"
-        placeholderTextColor="#666666"
+        placeholder='E-mail'
+        placeholderTextColor='#666666'
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
+        keyboardType='email-address'
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#666666"
+        placeholder='Senha'
+        placeholderTextColor='#666666'
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
@@ -57,7 +83,7 @@ export default function Login() {
 
       <TouchableOpacity
         style={[styles.button, loading && styles.saveButtonDisabled]}
-        onPress={handleSave}
+        onPress={handleLogin}
         disabled={loading}
       >
         <Text style={styles.buttonText}>
@@ -65,10 +91,9 @@ export default function Login() {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{marginTop: 20}} onPress={() => console.log("Esqueceu senha")}>
+      <TouchableOpacity style={{marginTop: 20}} onPress={() => console.log('Esqueceu senha')}>
         <Text style={styles.text}>Esqueceu a senha?</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
@@ -117,17 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },  
-  saveButton: {
-    backgroundColor: '#D4A413',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
   saveButtonDisabled: {
     backgroundColor: '#CCCCCC',
-  },
-  saveButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
   },
 });

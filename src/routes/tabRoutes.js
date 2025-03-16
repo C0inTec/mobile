@@ -1,6 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
@@ -23,7 +22,7 @@ export default function TabRoutes({ eye }) {
               iconName = 'dashboard';
             }
   
-            return <MaterialIcons name={iconName} size={24} color="white" />;
+            return <MaterialIcons name={iconName} size={24} color='#000000' />;
           },
     })}>
       <Tab.Screen name="Feed">
@@ -34,19 +33,17 @@ export default function TabRoutes({ eye }) {
       </Tab.Screen>
     </Tab.Navigator>
   );
-}
-
-const corPrimaria = '#D4A413'
+} 
 
 const styles = StyleSheet.create({
     tabBar: {
-        backgroundColor: corPrimaria,
+        backgroundColor: '#D4A413',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         overflow: 'hidden',
       },
     indicador:{
-        backgroundColor: 'white',
+        backgroundColor: '#000000',
         width: 130, 
         height: 4, 
         borderRadius: 2,

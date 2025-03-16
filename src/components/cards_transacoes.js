@@ -1,44 +1,42 @@
 // components/SaldoCard.js
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const ValorText = ({ eye, value, color }) => (
   <Text style={[styles.valorText, { color }]}>
-    {eye ? `R$ ${value}` : "•••••"}
+    {eye ? `R$ ${value}` : '•••••'}
   </Text>
 );
 
 export default function ReceitaCard({ title, value, eye, onPress, color }) {
   return (
     <View style={styles.receitaComponent}>
-      <View style={styles.contaRow}>
-        <Text style={styles.contaText}>{title}</Text>
-        <TouchableOpacity onPress={onPress}>
-          <Icon name="chevron-right" size={30} color="white" />
-        </TouchableOpacity>
-      </View>
-      <ValorText eye={eye} value={value} color={color} />
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.contaRow}>
+          <Text style={styles.contaText}>{title}</Text>
+          {title === "Receita"?
+          <Icon name="arrow-right" size={20} color={color}/> 
+          :
+          <Icon name="arrow-left" size={20} color={color} />
+          }
+        </View>
+        <ValorText eye={eye} value={value} color={color} />
+      </TouchableOpacity>
     </View>
   );
 }
 
-const corPrimaria = '#d4a413';
-const corSecundaria = '#0a0a0a';
-const corTexto = 'white';
-const corBorda = '#c0c0c0';
-const corPreta = 'black';
-
 const styles = StyleSheet.create({
   receitaComponent: {
-    backgroundColor: corPreta,
+    backgroundColor: '#000000',
     width: '45%',
     height: 85,
-    borderColor: corBorda,
+    borderColor: '#C0C0C0',
     borderWidth: 1.5,
     borderRadius: 10,
     marginTop: 20,
-    shadowColor: "#FFD700", // Amarelo-dourado
+    shadowColor: '#FFD700', // Amarelo-dourado
     shadowOffset: {
         width: 5,
         height: 10, // Profundidade da sombra
@@ -55,14 +53,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   contaText: {
-    color: corTexto,
+    color: '#FFFFFF',
     fontSize: 17,
     fontWeight: 'bold',
   },
   valorText: {
     fontSize: 17,
     paddingHorizontal: 10,
-    color: corTexto,
+    color: '#FFFFFF',
     fontWeight: 'bold',
     marginTop: 5,
   },

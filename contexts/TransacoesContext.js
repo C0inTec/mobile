@@ -8,6 +8,20 @@ export const TransacoesProvider = ({ children }) => {
   const [historico, setHistorico] = useState([]);
   const [totalReceitas, setTotalReceitas] = useState(0);
   const [totalDespesas, setTotalDespesas] = useState(0);
+  const [totalInvestimentos, setTotalInvestimentos] = useState(0);
+
+  // console.log(historico)
+
+  // APAGAR REGISTROS
+  // useEffect(() => {
+  //   const resetStorage = async () => {
+  //     await AsyncStorage.clear();
+  //     console.log('AsyncStorage resetado!');
+  //   };
+  
+  //   resetStorage();
+  // }, []); 
+
 
   // Carregar dados salvos ao iniciar
   const carregarDados = async () => {
@@ -23,14 +37,13 @@ export const TransacoesProvider = ({ children }) => {
       } else {
         setTotalReceitas(0);
         setTotalDespesas(0);
+        setTotalInvestimentos(0);
       }
     } catch (e) {
       console.error('Erro ao carregar dados:', e);
     }
   };
   
-  
-
   // Salvar dados quando houver alterações
   const salvarDados = async () => {
     try {
@@ -41,41 +54,33 @@ export const TransacoesProvider = ({ children }) => {
     }
   };
 
-  // Calcular receitas e despesas totais
+  // Calcular receitas, despesas e investimentos totais
   const calcularTotais = (historicoAtual) => {
     if (!historicoAtual || historicoAtual.length === 0) {
       setTotalReceitas(0);
       setTotalDespesas(0);
+      setTotalInvestimentos(0);
       return;
     }
   
-    const receitas = historicoAtual
-    .filter(transacao => transacao.tipo === 'receita')
-    .reduce((total, transacao) => {
-      const valorNumerico = parseFloat(
-        transacao.valor
-          .replace(/[^\d,.-]/g, '')
-          .replace(',', '.')
-      );
-      return total + (valorNumerico || 0);
-    }, 0);
+    const calcularTotal = (tipo) => historicoAtual
+      .filter(transacao => transacao.tipo === tipo)
+      .reduce((total, transacao) => {
+        const valorNumerico = parseFloat(
+            transacao.valor
+              .replace(/[^0-9.,-]/g, '') // Mantém números e símbolos numéricos
+              .replace(/\./g, '')        // Remove separadores de milhar
+              .replace(',', '.')         // Converte vírgula decimal em ponto
+          );
+          
+        
+        return total + (valorNumerico || 0);
+      }, 0);
   
-  const despesas = historicoAtual
-    .filter(transacao => transacao.tipo === 'despesa')
-    .reduce((total, transacao) => {
-      const valorNumerico = parseFloat(
-        transacao.valor
-          .replace(/[^\d,.-]/g, '')
-          .replace(',', '.')
-      );
-      return total + (valorNumerico || 0);
-    }, 0);
- 
-  
-  
-    setTotalReceitas(receitas || 0);
-    setTotalDespesas(despesas || 0);
-  };  
+    setTotalReceitas(calcularTotal('receita') || 0);
+    setTotalDespesas(calcularTotal('despesa') || 0);
+    setTotalInvestimentos(calcularTotal('investimento') || 0);
+  };
 
   useEffect(() => {
     carregarDados();
@@ -87,20 +92,21 @@ export const TransacoesProvider = ({ children }) => {
   }, [saldo, historico]);
 
   const adicionarTransacao = (novaTransacao, valorNumerico) => {
-    console.log('Nova transação:', novaTransacao);  // Verifique a transação que está sendo adicionada
-  
     setHistorico(prev => {
       const novoHistorico = [novaTransacao, ...prev];
       calcularTotais(novoHistorico);
       return novoHistorico;
     });
   
-    setSaldo(prev => prev + (novaTransacao.tipo === 'receita' ? valorNumerico : -valorNumerico));
+    setSaldo(prev => {
+      if (novaTransacao.tipo === 'receita') return prev + valorNumerico;
+      if (novaTransacao.tipo === 'despesa' || novaTransacao.tipo === 'investimento') return prev - valorNumerico;
+      return prev;
+    });
   };
-  
 
   return (
-    <TransacoesContext.Provider value={{ saldo, historico, totalReceitas, totalDespesas, adicionarTransacao }}>
+    <TransacoesContext.Provider value={{ saldo, historico, totalReceitas, totalDespesas, adicionarTransacao, totalInvestimentos }}>
       {children}
     </TransacoesContext.Provider>
   );

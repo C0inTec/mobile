@@ -1,8 +1,7 @@
-import { Text, View, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Modal, TextInput, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { sendMessageToGemini } from '../api/openIA';
+import { sendMessageToGemini } from '../Google_IA/gemini';
 import Icon from 'react-native-vector-icons/Feather';
-import styles from './modalChatStyle';
 
 export default function ModalChat({ modalVisible, setModalVisible }) {
   const [messages, setMessages] = useState([]); // Estado para armazenar as mensagens
@@ -48,7 +47,7 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
   return (
     <Modal
       visible={modalVisible}
-      animationType="slide"
+      animationType='slide'
       transparent={true}
       onRequestClose={closeModal}
     >
@@ -58,7 +57,7 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
           <View style={styles.chatHeader}>
             <Text style={styles.chatTitle}>Chat com CoinBot</Text>
             <TouchableOpacity onPress={closeModal}>
-              <Icon name="x" size={24} color="black" />
+              <Icon name="x" size={24} color='#00000' />
             </TouchableOpacity>
           </View>
 
@@ -69,7 +68,7 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
                 key={index}
                 style={{
                   alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                  backgroundColor: msg.role === 'user' ? '#d4a413' : '#f5f5f5',
+                  backgroundColor: msg.role === 'user' ? '#D4A413' : '#F5F5F5',
                   padding: 10,
                   borderRadius: 10,
                   marginVertical: 5,
@@ -85,7 +84,7 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
               </Text>
             )}
             {error && (
-              <Text style={{ alignSelf: 'center', marginVertical: 10, color: 'red' }}>
+              <Text style={{ alignSelf: 'center', marginVertical: 10, color: '#FF0000' }}>
                 {error}
               </Text>
             )}
@@ -95,13 +94,13 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              placeholder="Digite sua mensagem..."
-              placeholderTextColor="#aaa"
+              placeholder='Digite sua mensagem...'
+              placeholderTextColor='#AAAAAA'
               value={inputMessage}
               onChangeText={setInputMessage}
             />
             <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
-              <Icon name="send" size={20} color="white" />
+              <Icon name='send' size={20} color='#000000' />
             </TouchableOpacity>
           </View>
         </View>
@@ -109,3 +108,64 @@ export default function ModalChat({ modalVisible, setModalVisible }) {
     </Modal>
   );
 }
+
+const styles = StyleSheet.create({
+   modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  chatBox: {
+    width: '90%',
+    height: '70%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+  },
+  chatHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    paddingBottom: 10,
+  },
+  chatTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  messageArea: {
+    flex: 1,
+    paddingVertical: 10,
+  },
+  messageText: {
+    fontSize: 16,
+    color: 'black',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingTop: 10,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    fontSize: 14,
+    color: 'black',
+  },
+  sendButton: {
+    marginLeft: 10,
+    backgroundColor: '#d4a413',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
